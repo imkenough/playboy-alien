@@ -76,15 +76,34 @@ const server = http.createServer(async (req, res) => {
         case ".jpg":
           contentType = "image/jpg";
           break;
+        case ".jpeg":
+          contentType = "image/jpeg";
+          break;
+        case ".svg":
+          contentType = "image/svg+xml";
+          break;
+        case ".ico":
+          contentType = "image/x-icon";
+          break;
       }
 
       // Read the file
       fs.readFile(filePath, (error, content) => {
         if (error) {
           if (error.code === "ENOENT") {
-            // File not found
-            res.writeHead(404);
-            res.end("File not found");
+            // File not found - check if it's in the assets folder
+            const assetsPath = path.join("assets", filePath);
+            fs.readFile(assetsPath, (assetsError, assetsContent) => {
+              if (assetsError) {
+                // File not found in assets either
+                res.writeHead(404);
+                res.end(`File ${filePath} not found`);
+              } else {
+                // Found in assets folder
+                res.writeHead(200, { "Content-Type": contentType });
+                res.end(assetsContent, "utf-8");
+              }
+            });
           } else {
             // Server error
             res.writeHead(500);

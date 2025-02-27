@@ -5,8 +5,8 @@ const id = urlParams.get("id"); // TV Show ID
 // Create a function to get the API key securely
 async function getApiKey() {
   try {
-    // Instead of using window.apiKey, we'll make a request to our server
-    const response = await fetch("http://localhost:3001/api-key");
+    // Use relative URL instead of hardcoded localhost
+    const response = await fetch("/api-key");
     const data = await response.json();
     return data.apiKey;
   } catch (error) {

@@ -24,9 +24,8 @@ async function performSearch(query) {
   if (query) {
     showSkeletons(); // Display skeletons while fetching data
     try {
-      const response = await fetch(
-        `http://localhost:3001/search?q=${encodeURIComponent(query)}`
-      );
+      // Use relative URL instead of hardcoded localhost
+      const response = await fetch(`/search?q=${encodeURIComponent(query)}`);
       const data = await response.json();
 
       if (data.results && data.results.length > 0) {
