@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TV Show Player</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Import funnel sans from g fonts-->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@radix-ui/themes@latest/styles.css"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <!-- Logo -->
+      <div class="logo">
+        <a href="index.html"
+          ><img src="assets\alien-svgrepo-com (1).svg" alt="Logo"
+        /></a>
+      </div>
+      <!-- Right Links -->
+      <nav class="right-links">
+        <a href="index.html" class="link-main">Home</a>
+        <a href="why.html" class="link-side">Why?</a>
+        <a href="about.html" class="link-side">About</a>
+      </nav>
+    </header>
+
+    <div id="player-container">
+      <!-- Player on the left - spans full height -->
+      <div id="player">
+        <iframe
+          id="player-iframe"
+          src=""
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      <!-- Server Switcher on the top right -->
+      <div id="server-switcher">
+        <div class="radix-cards-container">
+          <div data-radix-radio-cards-root>
+            <div
+              data-radix-radio-cards-item
+              data-value="server1"
+              data-state="checked"
+              class="radix-radio-item"
+            >
+              <div data-radix-radio-cards-label>
+                <span data-radix-radio-cards-title>VidSrc</span>
+              </div>
+            </div>
+            <div
+              data-radix-radio-cards-item
+              data-value="server2"
+              data-state="unchecked"
+              class="radix-radio-item"
+            >
+              <div data-radix-radio-cards-label>
+                <span data-radix-radio-cards-title>Server 2</span>
+              </div>
+            </div>
+            <div
+              data-radix-radio-cards-item
+              data-value="server3"
+              data-state="unchecked"
+              class="radix-radio-item"
+            >
+              <div data-radix-radio-cards-label>
+                <span data-radix-radio-cards-title>Server 3</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Season and Episode Switcher on the bottom right -->
+      <div id="season-episode-switcher">
+        <div>
+          <select id="season"></select>
+        </div>
+
+        <!-- Episode List -->
+        <div id="episode-list">
+          <!-- <h3>Episodes</h3> -->
+          <ul id="episodes"></ul>
+        </div>
+      </div>
+    </div>
+
+    <script src="tv.js"></script>
+  </body>
+</html>

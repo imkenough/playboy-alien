@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real-Time TMDB Search</title>
+    <!-- Import funnel sans from g fonts-->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@radix-ui/themes@latest/styles.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <!-- Logo -->
+      <div class="logo">
+        <a href="index.html"
+          ><img src="assets\alien-svgrepo-com (1).svg" alt="Logo"
+        /></a>
+      </div>
+      <!-- Right Links -->
+      <nav class="right-links">
+        <a href="index.html" class="link-main">Home</a>
+        <a href="why.html" class="link-side">Why?</a>
+        <a href="about.html" class="link-side">About</a>
+      </nav>
+    </header>
+    <div class="rt-theme rt-theme-light">
+      <!-- Search Bar -->
+      <div class="rt-search-container-wrapper" id="search-wrapper">
+        <div class="rt-search-container">
+          <input
+            type="text"
+            id="search-input"
+            class="rt-search-input"
+            placeholder="Search"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+
+      <!-- Results Container -->
+      <div id="results-container" class="rt-grid"></div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

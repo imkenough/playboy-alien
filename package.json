@@ -1,0 +1,19 @@
+{
+  "name": "playboi",
+  "version": "1.0.0",
+  "main": "index.js",
+"scripts": {
+    "start": "node server.js"
+}
+,
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
