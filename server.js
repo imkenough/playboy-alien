@@ -89,29 +89,30 @@ const server = http
         }
 
         // Read the file
+        // Read the file
         fs.readFile(filePath, (error, content) => {
           if (error) {
             if (error.code === "ENOENT") {
-              // File not found - check if it's in the assets folder
-              const assetsPath = path.join("assets", filePath);
+              // Try finding in the assets folder
+              const assetsPath = path.join(
+                __dirname,
+                "assets",
+                path.basename(filePath)
+              );
               fs.readFile(assetsPath, (assetsError, assetsContent) => {
                 if (assetsError) {
-                  // File not found in assets either
                   res.writeHead(404);
-                  res.end(`File ${filePath} not found`);
+                  res.end(`File ${filePath} not found in assets.`);
                 } else {
-                  // Found in assets folder
                   res.writeHead(200, { "Content-Type": contentType });
                   res.end(assetsContent, "utf-8");
                 }
               });
             } else {
-              // Server error
               res.writeHead(500);
               res.end(`Server Error: ${error.code}`);
             }
           } else {
-            // Success - serve the file
             res.writeHead(200, { "Content-Type": contentType });
             res.end(content, "utf-8");
           }
