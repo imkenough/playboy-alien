@@ -86,23 +86,23 @@ body {
   border-color: #9b9b9b;
 }
 
-/* Centering the Why Content Without Changing Body Styles */
+/* Centering the Why Content */
+/* Centering the Why Content */
 #why-text-wrap {
   max-width: 800px;
-  margin: 0 auto; /* Center horizontally */
-  padding: 40px 20px;
+  margin: 0 auto;
+  padding: 100px 20px;
   display: flex;
   flex-direction: column;
-  align-items: left;
-  justify-content: center;
-  min-height: 80vh; /* Center vertically within the available space */
-  text-align: left;
+  align-items: left; /* Center horizontally */
+  justify-content: left; /* Center vertically */ /* Full screen height */
   animation: fadeIn 0.8s forwards;
   opacity: 0;
   transform: translateY(20px);
+  text-align: left; /* Keep text aligned left while centered vertically */
 }
 
-/* Heading Styles */
+/* Heading */
 #why-head {
   font-size: 3rem;
   margin-bottom: 20px;
@@ -111,13 +111,37 @@ body {
   text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
 }
 
-/* Paragraph Styles */
+/* Paragraph */
 .why-para {
   font-size: 1.2rem;
   line-height: 1.8;
+  color: #ffffff;
   margin-bottom: 20px;
-  color: #e0e0e0;
   text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Legal Text */
+.legal-text {
+  color: #ffcc00;
+  font-weight: 700;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  /* Why Section */
+  #why-text-wrap {
+    padding: 20px;
+  }
+
+  /* Heading */
+  #why-head {
+    font-size: 2.5rem;
+  }
+
+  /* Paragraph */
+  .why-para {
+    font-size: 1rem;
+  }
 }
 
 /* Fade-in Animation */
@@ -125,17 +149,6 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-/* Mobile Responsiveness */
-@media screen and (max-width: 768px) {
-  #why-head {
-    font-size: 2.5rem;
-  }
-
-  .why-para {
-    font-size: 1rem;
   }
 }
 
@@ -193,87 +206,6 @@ body {
 
   .about-para {
     font-size: 1rem;
-  }
-}
-
-/* Tooltip Container */
-.tooltip-container {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  font-family: "Funnel Sans", sans-serif;
-}
-
-/* Tooltip Trigger Text */
-.tooltip-text {
-  color: #ffcc00; /* Bright yellow */
-  font-weight: 700;
-  transition: color 0.3s;
-}
-
-.tooltip-text:hover {
-  color: #ffffff; /* Change color on hover */
-}
-
-/* Tooltip Popup */
-.tooltip-popup {
-  position: absolute;
-  bottom: 125%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(28, 28, 28, 0.95); /* Dark theme background */
-  color: #e0e0e0;
-  padding: 8px 10px;
-  border-radius: 5px;
-  font-size: 0.9rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.2s, visibility 0.2s;
-  z-index: 10;
-  pointer-events: none;
-  min-width: 200px;
-  text-align: left;
-}
-
-/* Tooltip Arrow */
-.tooltip-popup::before {
-  content: "";
-  position: absolute;
-  bottom: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 6px;
-  border-style: solid;
-  border-color: rgba(28, 28, 28, 0.95) transparent transparent transparent;
-}
-
-/* Show Tooltip */
-.tooltip-container:hover .tooltip-popup {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Mobile Responsive Styles */
-@media screen and (max-width: 768px) {
-  /* Make tooltip take more width and avoid overflow */
-  .tooltip-popup {
-    max-width: 90vw; /* Almost full screen width */
-    bottom: auto; /* Reset bottom positioning */
-    top: 100%; /* Position below trigger */
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px;
-    font-size: 1rem;
-    white-space: normal; /* Allow full text wrapping */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  }
-
-  /* Adjust arrow for bottom position */
-  .tooltip-popup::before {
-    bottom: auto;
-    top: -6px;
-    border-color: transparent transparent rgba(28, 28, 28, 0.95) transparent;
   }
 }
 
