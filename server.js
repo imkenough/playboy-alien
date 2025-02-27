@@ -21,27 +21,8 @@ const server = http.createServer(async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
 
   try {
-    if (pathname === "/") {
-      res.setHeader("Content-Type", "text/html");
-      fs.readFile("index.html", (err, data) => {
-        if (err) {
-          res.statusCode = 500;
-          res.end("Error loading index.html");
-        } else {
-          res.end(data);
-        }
-      });
-    } else if (pathname.endsWith(".css")) {
-      res.setHeader("Content-Type", "text/css");
-      fs.readFile(path.join(__dirname, pathname), (err, data) => {
-        if (err) {
-          res.statusCode = 404;
-          res.end("CSS file not found");
-        } else {
-          res.end(data);
-        }
-      });
-    } else if (pathname === "/api-key" && req.method === "GET") {
+    // API endpoints
+    if (pathname === "/api-key" && req.method === "GET") {
       res.setHeader("Content-Type", "application/json");
       res.end(JSON.stringify({ apiKey: process.env.TMDB_API_KEY }));
     } else if (pathname === "/search" && req.method === "GET") {
@@ -61,10 +42,60 @@ const server = http.createServer(async (req, res) => {
       );
       res.setHeader("Content-Type", "application/json");
       res.end(JSON.stringify({ results: filteredResults }));
-    } else {
-      res.statusCode = 404;
-      res.setHeader("Content-Type", "application/json");
-      res.end(JSON.stringify({ error: "Endpoint not found." }));
+    }
+    // Static file serving
+    else {
+      // Map the URL path to the appropriate file
+      let filePath;
+
+      if (pathname === "/" || pathname === "") {
+        filePath = "index.html";
+      } else {
+        // Remove leading slash and use as file path
+        filePath = pathname.substring(1);
+      }
+
+      // Get file extension
+      const extname = path.extname(filePath);
+
+      // Set content type based on file extension
+      let contentType = "text/html";
+      switch (extname) {
+        case ".js":
+          contentType = "text/javascript";
+          break;
+        case ".css":
+          contentType = "text/css";
+          break;
+        case ".json":
+          contentType = "application/json";
+          break;
+        case ".png":
+          contentType = "image/png";
+          break;
+        case ".jpg":
+          contentType = "image/jpg";
+          break;
+      }
+
+      // Read the file
+      fs.readFile(filePath, (error, content) => {
+        if (error) {
+          if (error.code === "ENOENT") {
+            // File not found
+            res.writeHead(404);
+            res.end("File not found");
+          } else {
+            // Server error
+            res.writeHead(500);
+            res.end(`Server Error: ${error.code}`);
+          }
+        } else {
+          // Success - serve the file
+          res.writeHead(200, { "Content-Type": contentType });
+          res.end(content, "utf-8");
+        }
+      });
     }
   } catch (error) {
     console.error("Server error:", error);

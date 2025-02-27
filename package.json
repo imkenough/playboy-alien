@@ -1,19 +1,17 @@
 {
-  "name": "playboi",
+  "name": "movie-streaming-app",
   "version": "1.0.0",
-  "main": "index.js",
-"scripts": {
-    "start": "node server.js"
-}
-,
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "description": "Movie and TV streaming application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
   "dependencies": {
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2"
+    "dotenv": "^16.0.3",
+    "node-fetch": "^3.3.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
   }
 }
