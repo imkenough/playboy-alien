@@ -2,7 +2,8 @@ const http = require("http"); // Import the http module
 const { URL } = require("url");
 require("dotenv").config();
 
-const PORT = 3001; // Change this to an available port
+const PORT = process.env.PORT || 3001;
+// Change this to an available port
 
 // Helper function to fetch data from TMDB API
 async function fetchFromTMDB(url) {
