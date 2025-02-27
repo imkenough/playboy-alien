@@ -1,0 +1,4 @@
+node_modules
+.env            # If you have sensitive API keys
+.DS_Store       # MacOS system file
+*.log           # Log files
