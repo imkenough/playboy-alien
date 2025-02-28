@@ -822,3 +822,47 @@ body {
     overflow: hidden;
   }
 }
+
+/* Legal Disclaimer Container */
+#legal-text-wrap {
+  max-width: 800px; /* Maintain consistent width */
+  margin: 0 auto; /* Center horizontally */
+  padding: 20px;
+  box-sizing: border-box;
+  /* height: calc(100vh - 40px);  */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  overflow-y: auto; /* Avoid scrolling unless necessary */
+}
+
+/* Heading Style */
+#legal-head {
+  font-size: 2rem;
+  margin-bottom: 16px;
+  color: #fff; /* White text to match dark background */
+  text-align: left;
+}
+
+/* Paragraph Style */
+.legal-para {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #8d93a0; /* Light grey for readability */
+  margin-bottom: 16px;
+  text-align: justify;
+}
+
+/* Optional: Add Smooth Scrolling in the Container */
+#legal-text-wrap::-webkit-scrollbar {
+  width: 8px;
+}
+
+#legal-text-wrap::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 4px;
+}
+
+.lmao {
+  color: yellow;
+}
