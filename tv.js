@@ -183,9 +183,9 @@ function updatePlayer(server, episodeNumber = 1) {
   const seasonNumber = seasonSelect.value;
 
   const servers = {
-    server1: `https://vidsrc.to/embed/tv/${id}/${seasonNumber}/${episodeNumber}`,
-    server2: `https://example.com/server2/tv/${id}/${seasonNumber}/${episodeNumber}`,
-    server3: `https://example.com/server3/tv/${id}/${seasonNumber}/${episodeNumber}`,
+    server1: `https://vidsrc.to/embed/tv/${id}/${seasonNumber}/${episodeNumber}`, // VidSrc
+    server2: `https://embed.su/embed/tv/${id}/${seasonNumber}/${episodeNumber}`, // Embed.su
+    server3: `https://example.com/server3/tv/${id}/${seasonNumber}/${episodeNumber}`, // Placeholder for future servers
   };
 
   playerIframe.src = servers[server];
