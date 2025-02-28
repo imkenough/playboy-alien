@@ -160,7 +160,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: left;
-  justify-content: center;
+  justify-content: left;
   min-height: 80vh; /* Center vertically within the available space */
   text-align: center;
   transform: translateY(20px);
