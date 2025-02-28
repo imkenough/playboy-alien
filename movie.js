@@ -82,9 +82,9 @@ document.addEventListener("DOMContentLoaded", setupServerSwitchers);
 function updatePlayer(server) {
   const playerIframe = document.getElementById("player-iframe");
   const servers = {
-    server1: `https://vidsrc.to/embed/movie/${id}`, // VidSrc
+    server1: `https://vidsrc.to/embed/movie/${id}`, //vidsrc
     server2: `https://embed.su/embed/movie/${id}`, // Embed.su
-    server3: `https://example.com/server3/movie/${id}`, // Placeholder for future servers
+    server3: `https://vidlink.pro/movie/${id}`, // vidlink
   };
 
   playerIframe.src = servers[server];
