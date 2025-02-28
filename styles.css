@@ -86,6 +86,18 @@ body {
   border-color: #9b9b9b;
 }
 
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  /* Search Container Wrapper */
+  .rt-search-container-wrapper {
+    width: 85%;
+  }
+
+  .rt-search-input {
+    font-size: 1rem;
+  }
+}
+
 /* Centering the Why Content */
 #why-text-wrap {
   max-width: 800px;
@@ -106,6 +118,7 @@ body {
   font-size: 3rem;
   margin-bottom: 20px;
   font-weight: 800;
+  /* padding-top: 20px; */
   color: #ffffff;
   text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
 }
@@ -153,39 +166,37 @@ body {
 
 /* about me page */
 
+/* Centering the Why Content */
 #about-text-wrap {
   max-width: 800px;
-  margin: 0 auto; /* Center horizontally */
-  padding: 40px 20px;
+  margin: 0 auto;
+  padding: 100px 20px;
   display: flex;
   flex-direction: column;
-  align-items: left;
-  justify-content: left;
-  min-height: 80vh; /* Center vertically within the available space */
-  text-align: center;
-  transform: translateY(20px);
-  animation: fadeSlideUp 0.8s ease-out forwards;
-  animation-delay: 0.3s; /* Optional: Delay to sync with other elements */
+  align-items: left; /* Center horizontally */
+  justify-content: left; /* Center vertically */ /* Full screen height */
   animation: fadeIn 0.8s forwards;
   opacity: 0;
   transform: translateY(20px);
+  text-align: left; /* Keep text aligned left while centered vertically */
 }
 
-/* Heading Styles */
+/* Heading */
 #about-head {
   font-size: 3rem;
   margin-bottom: 20px;
   font-weight: 800;
+  /* padding-top: 20px; */
   color: #ffffff;
   text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
 }
 
-/* Paragraph Styles */
+/* Paragraph */
 .about-para {
   font-size: 1.2rem;
   line-height: 1.8;
+  color: #ffffff;
   margin-bottom: 20px;
-  color: #e0e0e0;
   text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
@@ -199,10 +210,17 @@ body {
 
 /* Mobile Responsiveness */
 @media screen and (max-width: 768px) {
+  /* Why Section */
+  #about-text-wrap {
+    padding: 20px;
+  }
+
+  /* Heading */
   #about-head {
     font-size: 2.5rem;
   }
 
+  /* Paragraph */
   .about-para {
     font-size: 1rem;
   }
@@ -375,10 +393,21 @@ body {
   padding: 20px 15%; /* Increase padding for breathing space */
 }
 
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 15%;
+  }
+}
+
 /* Logo */
 .logo img {
   height: 30px;
   width: auto;
+  padding-top: 7px;
 }
 
 /* Navigation Links */
