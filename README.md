@@ -94,9 +94,13 @@ _im still not finalised with the name i just couldnt think of anything else_
 
 This project is created strictly for educational purposes. It demonstrates the use of APIs and web development techniques. The creator does not host any content; all streaming is done through third-party providers. Users are responsible for ensuring they comply with all applicable laws regarding content access.
 
+---
+
 ## 👨‍💻 Creator
 
 Made by Kenny (GitHub: [@imkenough](https://github.com/imkenough/))
+
+---
 
 ## 🛣️ Future Improvements
 
@@ -105,6 +109,8 @@ Made by Kenny (GitHub: [@imkenough](https://github.com/imkenough/))
 - Better error handling and fallback options for unavailable content
 - Additional streaming sources
 - Offline viewing capabilities
+
+---
 
 ## 📝 License
 
