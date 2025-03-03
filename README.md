@@ -1,52 +1,115 @@
-#  Streaming Website  
+# Playboiii - Movie & TV Streaming Website
 
-[Alien](https://playboy-alien.onrender.com/) is A clean and distraction-free streaming platform that aggregates movies and TV shows from multiple sources. Built with **HTML, CSS,** and **JavaScript**,
+[Alien](https://playboy-alien.onrender.com/)  is a simple, clean streaming website that allows users to search for and watch movies and TV shows through various external providers.
 
----
-
-##  Features  
-
--  **Live Search** – Search for movies and TV shows dynamically.  
--  **Multiple Streaming Servers** – Choose from three integrated streaming sources.  
--  **Settings Menu** – Customize your experience.  
--  **Peace Mode vs. Recommendations Mode** – Toggle between a clean UI or suggestions (upcoming).
--  **Watchlist** – Save movies and shows to watch later (upcoming).  
--  **Continue Watching** – Resume where you left off (upcoming).  
--  **Theme Toggler** – Switch between different UI themes (possible future update).  
+_im still not finalised with the name i just couldnt think of anything else_
 
 ---
 
-##  Tech Stack  
+## 🎬 Features
 
-- **Frontend:** HTML, CSS, JavaScript, Bootstrap  
-- **Backend:** Node.js (Express)  
-- **APIs Used:** TMDB, VidSrc, and additional streaming sources
-
----
-
-##  Future Plans  
-
-- **User Authentication** – Allow users to **log in and sync watch history**.  
-- **Watchlist Storage** – Save & retrieve watchlists using a **database or local storage**.  
-- **Continue Watching** – Track progress & resume playback.  
-- **More Streaming Servers** – Expand options for better availability.  
+- **Search functionality**: Search for movies and TV shows with instant results
+- **Movie & TV show playback**: Watch content through multiple streaming sources
+- **Server switching**: Choose between different streaming providers
+- **Responsive design**: Works on desktop and mobile devices
+- **Season & episode navigation**: Easy browsing of TV show seasons and episodes
 
 ---
 
-##  License  
+## 🛠️ Technology Stack
 
-This project is strictly for **educational and research purposes**. The creator **does not directly host or distribute** any copyrighted material.  
-
----
-
-##  Legal Disclaimer
-
-This streaming website is created strictly for educational purposes only. The primary intent of this project is to explore and demonstrate the use of APIs, enhance web development skills, and gain practical experience with technologies like HTML, CSS, JavaScript, and more.
-
-All content displayed through this site is sourced from publicly available APIs, and no copyrighted material is hosted, stored, or distributed by this platform. Users are solely responsible for ensuring compliance with all applicable laws regarding content access and usage.
-
-The creator of this project does not endorse or encourage any illegal streaming or misuse of copyrighted material. This project is intended for learning, research, and portfolio purposes only.
+- **Frontend**: HTML, CSS, JavaScript
+- **Backend**: Node.js
+- **APIs**: The Movie Database (TMDB) API for content information
+- **Styling**: Custom CSS with Radix UI components
+- **Fonts**: Funnel Sans from Google Fonts
 
 ---
 
-###  **Enjoy a clean, distraction-free streaming experience!**  
+## 📋 Project Structure
+
+```
+├── assets/                # Images and SVGs (including logo.svg)
+├── index.html            # Homepage with search functionality
+├── about.html            # About page with creator information
+├── legal.html            # Legal disclaimer page
+├── why.html              # Creator's motivation for the project
+├── movie.html            # Movie player page
+├── tv.html               # TV show player with season/episode selection
+├── styles.css            # Styling for all pages (not included in attachment)
+├── script.js             # Main JavaScript for search functionality
+├── movie.js              # JavaScript for movie player functionality
+├── tv.js                 # JavaScript for TV show player functionality
+├── server.js             # Node.js server for API routing
+├── package.json          # Project dependencies and metadata
+└── .env                  # Environment variables file for API keys (not tracked)
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v16.0.0 or higher)
+- API key from The Movie Database (TMDB)
+
+### Installation
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/playboiii.git
+   cd playboiii
+   ```
+
+2. Install the dependencies:
+   ```
+   npm install
+   ```
+
+3. Create a `.env` file in the root directory with your TMDB API key:
+   ```
+   TMDB_API_KEY=your_api_key_here
+   ```
+
+4. Start the server:
+   ```
+   npm start
+   ```
+
+5. Open your browser and navigate to `http://localhost:3001`
+
+---
+
+## 🔍 How It Works
+
+1. The app uses TMDB API to search for movies and TV shows
+2. When a user selects content, they're directed to either movie.html or tv.html
+3. The player embeds content from external sources like Embed.su, Vidlink, and VidSrc
+4. The Node.js server proxies API requests to protect the API key
+
+---
+
+## ⚖️ Legal Disclaimer
+
+This project is created strictly for educational purposes. It demonstrates the use of APIs and web development techniques. The creator does not host any content; all streaming is done through third-party providers. Users are responsible for ensuring they comply with all applicable laws regarding content access.
+
+## 👨‍💻 Creator
+
+Made by Kenny (GitHub: [@imkenough](https://github.com/imkenough/))
+
+## 🛣️ Future Improvements
+
+- User authentication and favorites list
+- Improved UI/UX with more interactive elements
+- Better error handling and fallback options for unavailable content
+- Additional streaming sources
+- Offline viewing capabilities
+
+## 📝 License
+
+This project is not explicitly licensed. All rights reserved.
+
+---
+
+*Note: None of the ads on this site belong to the creator. They come from API providers.*
