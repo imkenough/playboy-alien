@@ -2,6 +2,9 @@
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id"); // Movie ID
 
+// Local storage key prefix for this movie
+const storageKeyPrefix = `movie_${id}_`;
+
 // Create a function to get the API key securely
 async function getApiKey() {
   try {
@@ -12,6 +15,25 @@ async function getApiKey() {
   } catch (error) {
     console.error("Error fetching API key:", error);
     return null;
+  }
+}
+
+// Functions to save and load user preferences from localStorage
+function saveUserPreference(key, value) {
+  try {
+    localStorage.setItem(`${storageKeyPrefix}${key}`, value);
+  } catch (error) {
+    console.error(`Error saving ${key} to localStorage:`, error);
+  }
+}
+
+function loadUserPreference(key, defaultValue) {
+  try {
+    const value = localStorage.getItem(`${storageKeyPrefix}${key}`);
+    return value !== null ? value : defaultValue;
+  } catch (error) {
+    console.error(`Error loading ${key} from localStorage:`, error);
+    return defaultValue;
   }
 }
 
@@ -34,7 +56,9 @@ async function fetchMovieDetails() {
     // Update page title with movie name
     document.title = `${data.title} - Movie Player`;
 
-    updatePlayer("server1"); // Default to Server 1 (VidSrc)
+    // Load saved server preference and update player
+    const savedServer = loadUserPreference("server", "server1");
+    updatePlayer(savedServer);
 
     // Set up event listeners for server switches
     setupServerSwitchers();
@@ -43,13 +67,23 @@ async function fetchMovieDetails() {
   }
 }
 
-// Set up event listeners for server radio buttons - FIXED
+// Set up event listeners for server radio buttons
 function setupServerSwitchers() {
-  // Fix: Update selectors to match the actual DOM structure from Radix UI
   const radioItems = document.querySelectorAll("[data-radix-radio-cards-item]");
 
+  // Load saved server preference
+  const savedServer = loadUserPreference("server", "server1");
+
   radioItems.forEach((item) => {
-    item.classList.add("radix-radio-item"); // Add the class our CSS targets
+    item.classList.add("radix-radio-item");
+    const serverValue = item.getAttribute("data-value");
+
+    // Set the checked state based on saved preference
+    if (serverValue === savedServer) {
+      item.setAttribute("data-state", "checked");
+    } else {
+      item.setAttribute("data-state", "unchecked");
+    }
 
     item.addEventListener("click", () => {
       const serverValue = item.getAttribute("data-value");
@@ -63,20 +97,14 @@ function setupServerSwitchers() {
         }
       });
 
+      // Save user preference
+      saveUserPreference("server", serverValue);
+
       // Update player with selected server
       updatePlayer(serverValue);
     });
   });
-
-  // Set the default server as checked
-  const defaultItem = document.querySelector("[data-value='server1']");
-  if (defaultItem) {
-    defaultItem.setAttribute("data-state", "checked");
-  }
 }
-
-// Call setupServerSwitchers after the DOM is fully loaded
-document.addEventListener("DOMContentLoaded", setupServerSwitchers);
 
 // Update player with selected server
 function updatePlayer(server) {

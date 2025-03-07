@@ -2,6 +2,9 @@
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id"); // TV Show ID
 
+// Local storage key prefix for this TV show
+const storageKeyPrefix = `tv_${id}_`;
+
 // Create a function to get the API key securely
 async function getApiKey() {
   try {
@@ -12,6 +15,25 @@ async function getApiKey() {
   } catch (error) {
     console.error("Error fetching API key:", error);
     return null;
+  }
+}
+
+// Functions to save and load user preferences from localStorage
+function saveUserPreference(key, value) {
+  try {
+    localStorage.setItem(`${storageKeyPrefix}${key}`, value);
+  } catch (error) {
+    console.error(`Error saving ${key} to localStorage:`, error);
+  }
+}
+
+function loadUserPreference(key, defaultValue) {
+  try {
+    const value = localStorage.getItem(`${storageKeyPrefix}${key}`);
+    return value !== null ? value : defaultValue;
+  } catch (error) {
+    console.error(`Error loading ${key} from localStorage:`, error);
+    return defaultValue;
   }
 }
 
@@ -43,13 +65,23 @@ async function fetchTVDetails() {
   }
 }
 
-// Set up event listeners for server radio buttons - FIXED
+// Set up event listeners for server radio buttons
 function setupServerSwitchers() {
-  // Fix: Update selectors to match the actual DOM structure from Radix UI
   const radioItems = document.querySelectorAll("[data-radix-radio-cards-item]");
 
+  // Load saved server preference
+  const savedServer = loadUserPreference("server", "server1");
+
   radioItems.forEach((item) => {
-    item.classList.add("radix-radio-item"); // Add the class our CSS targets
+    item.classList.add("radix-radio-item");
+    const serverValue = item.getAttribute("data-value");
+
+    // Set the checked state based on saved preference
+    if (serverValue === savedServer) {
+      item.setAttribute("data-state", "checked");
+    } else {
+      item.setAttribute("data-state", "unchecked");
+    }
 
     item.addEventListener("click", () => {
       const serverValue = item.getAttribute("data-value");
@@ -63,6 +95,9 @@ function setupServerSwitchers() {
         }
       });
 
+      // Save user preference
+      saveUserPreference("server", serverValue);
+
       // For tv.html - get the active episode if applicable
       const activeEpisode = document.querySelector("#episodes li.active");
       if (activeEpisode) {
@@ -73,43 +108,42 @@ function setupServerSwitchers() {
       }
     });
   });
-
-  // Set the default server as checked
-  const defaultItem = document.querySelector("[data-value='server1']");
-  if (defaultItem) {
-    defaultItem.setAttribute("data-state", "checked");
-  }
 }
 
-// Call setupServerSwitchers after the DOM is fully loaded
-document.addEventListener("DOMContentLoaded", setupServerSwitchers);
-
-// Render seasons dropdown using Radix UI Select
+// Render seasons dropdown
 function renderSeasons(seasons) {
   const seasonSelect = document.getElementById("season");
   seasonSelect.innerHTML = ""; // Clear existing options
 
-  seasons.forEach((season) => {
-    // Skip season 0 (often specials)
-    if (season.season_number > 0) {
-      const option = document.createElement("option");
-      option.value = season.season_number;
-      option.textContent = `Season ${season.season_number}`;
-      seasonSelect.appendChild(option);
-    }
+  // Filter out season 0 (often specials)
+  const validSeasons = seasons.filter((season) => season.season_number > 0);
+
+  // Default to first valid season
+  let defaultSeason =
+    validSeasons.length > 0 ? validSeasons[0].season_number : 1;
+
+  // Load saved season preference
+  const savedSeason = parseInt(loadUserPreference("season", defaultSeason));
+
+  validSeasons.forEach((season) => {
+    const option = document.createElement("option");
+    option.value = season.season_number;
+    option.textContent = `Season ${season.season_number}`;
+    seasonSelect.appendChild(option);
   });
+
+  // Set the selected season based on saved preference
+  seasonSelect.value = savedSeason;
 
   // Add event listener to season select
   seasonSelect.addEventListener("change", () => {
-    fetchEpisodes(seasonSelect.value);
+    const selectedSeason = seasonSelect.value;
+    saveUserPreference("season", selectedSeason);
+    fetchEpisodes(selectedSeason);
   });
 
-  // Fetch episodes for the first season
-  if (seasons.length > 0 && seasons[0].season_number > 0) {
-    fetchEpisodes(seasons[0].season_number);
-  } else if (seasons.length > 1) {
-    fetchEpisodes(seasons[1].season_number);
-  }
+  // Fetch episodes for the selected season
+  fetchEpisodes(savedSeason);
 }
 
 // Fetch episodes for a season
@@ -138,10 +172,18 @@ function renderEpisodes(episodes) {
   const episodeList = document.getElementById("episodes");
   episodeList.innerHTML = "";
 
+  // Load saved episode preference for current season
+  const savedEpisode = parseInt(loadUserPreference("episode", 1));
+
   episodes.forEach((episode) => {
     const listItem = document.createElement("li");
     listItem.textContent = `Episode ${episode.episode_number}: ${episode.name}`;
     listItem.setAttribute("data-episode", episode.episode_number);
+
+    // Mark the saved episode as active
+    if (episode.episode_number === savedEpisode) {
+      listItem.classList.add("active");
+    }
 
     listItem.addEventListener("click", () => {
       // Remove active class from all episodes
@@ -152,13 +194,16 @@ function renderEpisodes(episodes) {
       // Add active class to this episode
       listItem.classList.add("active");
 
+      // Save selected episode
+      saveUserPreference("episode", episode.episode_number);
+
       // Get the currently selected server
       const selectedServerItem = document.querySelector(
         "[data-radix-radio-cards-item][data-state='checked']"
       );
       const selectedServer = selectedServerItem
         ? selectedServerItem.getAttribute("data-value")
-        : "server1";
+        : loadUserPreference("server", "server1");
 
       updatePlayer(selectedServer, episode.episode_number);
     });
@@ -166,14 +211,38 @@ function renderEpisodes(episodes) {
     episodeList.appendChild(listItem);
   });
 
-  // Load the first episode by default
-  if (episodes.length > 0) {
-    const firstEpisode = document.querySelector("#episodes li");
-    if (firstEpisode) {
-      firstEpisode.classList.add("active");
-      updatePlayer("server1", episodes[0].episode_number);
-    }
+  // Find the episode that matches our saved preference
+  const targetEpisode = episodes.find(
+    (ep) => ep.episode_number === savedEpisode
+  );
+
+  // If we found a matching episode, use it; otherwise use the first one
+  const episodeToPlay = targetEpisode
+    ? targetEpisode.episode_number
+    : episodes.length > 0
+    ? episodes[0].episode_number
+    : 1;
+
+  // Make sure the correct episode is visually marked as active
+  const episodeElement = document.querySelector(
+    `#episodes li[data-episode="${episodeToPlay}"]`
+  );
+  if (episodeElement) {
+    document
+      .querySelectorAll("#episodes li")
+      .forEach((item) => item.classList.remove("active"));
+    episodeElement.classList.add("active");
   }
+
+  // Get selected server and update player
+  const selectedServerItem = document.querySelector(
+    "[data-radix-radio-cards-item][data-state='checked']"
+  );
+  const selectedServer = selectedServerItem
+    ? selectedServerItem.getAttribute("data-value")
+    : loadUserPreference("server", "server1");
+
+  updatePlayer(selectedServer, episodeToPlay);
 }
 
 // Update player with selected server and episode
