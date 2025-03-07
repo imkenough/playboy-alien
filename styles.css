@@ -1006,3 +1006,206 @@ body {
 .hamburger-menu.active .bar:nth-child(3) {
   transform: translateY(-7px) rotate(-40deg); /* Adjusted translateY and rotation */
 }
+
+/* Settings Page Styles */
+#settings-wrap {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 100px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  animation: fadeIn 0.8s forwards;
+  opacity: 0;
+  transform: translateY(20px);
+  text-align: left;
+}
+
+/* Settings Header */
+#settings-head {
+  font-size: 3rem;
+  margin-bottom: 30px;
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Settings Section */
+.settings-section {
+  background-color: #1c1c1c;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.settings-section-title {
+  font-size: 1.5rem;
+  color: #ffffff;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #333;
+}
+
+/* Settings Option */
+.settings-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #333;
+}
+
+.settings-option:last-child {
+  border-bottom: none;
+}
+
+.settings-option-info {
+  flex: 1;
+}
+
+.settings-option-info h3 {
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.settings-option-info p {
+  color: #8d93a0;
+  font-size: 0.9rem;
+}
+
+/* Toggle Switch Styling */
+.toggle-container {
+  position: relative;
+  width: 60px;
+  height: 30px;
+  margin-left: 20px;
+}
+
+.toggle-checkbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-label {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #333;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.toggle-label:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.toggle-checkbox:checked + .toggle-label {
+  background-color: #54585f;
+}
+
+.toggle-checkbox:checked + .toggle-label:before {
+  transform: translateX(30px);
+}
+
+/* Settings Saved Message */
+.settings-message {
+  background-color: #54585f;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-top: 20px;
+  text-align: center;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.settings-message.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  #settings-wrap {
+    padding: 20px;
+  }
+
+  #settings-head {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+
+  .settings-option {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .toggle-container {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}
+
+/* Recently Watched Section */
+.recently-watched-section {
+  margin: 40px auto 20px;
+  padding: 0 20px;
+  width: 100%;
+  max-width: 1000px;
+  animation: fadeIn 0.8s forwards;
+}
+
+.recently-watched-title {
+  font-size: 1.8rem;
+  color: #ffffff;
+  margin-bottom: 15px;
+  font-weight: 700;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #333;
+}
+
+.recently-watched-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+  justify-content: center;
+}
+
+/* Mobile responsiveness for Recently Watched */
+@media screen and (max-width: 768px) {
+  .recently-watched-section {
+    padding: 0 10px;
+    margin: 20px auto;
+  }
+
+  .recently-watched-title {
+    font-size: 1.5rem;
+  }
+
+  .recently-watched-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+}

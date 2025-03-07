@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings - PlayBoy</title>
+    <!-- Import funnel sans from g fonts-->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@radix-ui/themes@latest/styles.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="settings.css" />
+    <link rel="icon" type="image/x-icon" href="assets/logo.svg" />
+  </head>
+  <body>
+    <!-- Mobile Sidebar -->
+    <div class="mobile-sidebar">
+      <div class="sidebar-content">
+        <a href="index.html" class="sidebar-link">Home</a>
+        <a href="why.html" class="sidebar-link">Why</a>
+        <a href="about.html" class="sidebar-link">About</a>
+        <a href="settings.html" class="sidebar-link">Settings</a>
+        <!-- Add more links here as needed -->
+      </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="sidebar-overlay"></div>
+
+    <!-- Header -->
+    <header class="header">
+      <!-- Logo -->
+      <div class="logo">
+        <a href="index.html"><img src="assets/logo.svg" alt="Logo" /></a>
+      </div>
+      <!-- Right Links - Hidden on Mobile -->
+      <nav class="right-links">
+        <a href="index.html" class="link-side">Home</a>
+        <a href="why.html" class="link-side">Why</a>
+        <a href="about.html" class="link-side">About</a>
+        <a href="settings.html" class="link-main">Settings</a>
+        <!-- Add more links here as needed -->
+      </nav>
+      <!-- Hamburger Menu Button -->
+      <div class="hamburger-menu">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+    </header>
+
+    <!-- Settings Container -->
+    <div id="settings-wrap">
+      <h1 id="settings-head">Settings</h1>
+
+      <div class="settings-section">
+        <h2 class="settings-section-title">Personalization</h2>
+
+        <div class="settings-option">
+          <div class="settings-option-info">
+            <h3>Recently Watched</h3>
+            <p>Show recently watched content to pick up where you left off</p>
+          </div>
+          <div class="toggle-container">
+            <input
+              type="checkbox"
+              id="recentlyWatchedToggle"
+              class="toggle-checkbox"
+            />
+            <label for="recentlyWatchedToggle" class="toggle-label"></label>
+          </div>
+        </div>
+
+        <!-- Additional setting options can be added here in the same format -->
+      </div>
+
+      <div class="settings-message" id="settingsSaved">
+        Settings saved successfully!
+      </div>
+    </div>
+
+    <script src="settings.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
