@@ -17,18 +17,40 @@
     <link rel="icon" type="image/x-icon" href="assets/logo.svg" />
   </head>
   <body>
+    <!-- Mobile Sidebar -->
+
+    <!-- Mobile Sidebar -->
+    <div class="mobile-sidebar">
+      <div class="sidebar-content">
+        <a href="index.html" class="sidebar-link">Home</a>
+        <a href="why.html" class="sidebar-link">Why</a>
+        <a href="about.html" class="sidebar-link">About</a>
+        <!-- Add more links here as needed -->
+      </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="sidebar-overlay"></div>
+
     <!-- Header -->
     <header class="header">
       <!-- Logo -->
       <div class="logo">
-        <a href="index.html"><img src="assets/logo.svg" alt="Logo" /> </a>
+        <a href="index.html"><img src="assets/logo.svg" alt="Logo" /></a>
       </div>
-      <!-- Right Links -->
+      <!-- Right Links - Hidden on Mobile -->
       <nav class="right-links">
         <a href="index.html" class="link-main">Home</a>
         <a href="why.html" class="link-side">Why</a>
         <a href="about.html" class="link-side">About</a>
+        <!-- Add more links here as needed -->
       </nav>
+      <!-- Hamburger Menu Button -->
+      <div class="hamburger-menu">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
     </header>
 
     <div id="about-text-wrap">

@@ -1,5 +1,4 @@
-/* reset styles */
-html,
+* reset styles */ html,
 body {
   height: 100%;
   margin: 0;
@@ -865,4 +864,143 @@ body {
 
 .lmao {
   color: yellow;
+}
+
+/* Hamburger Menu Styles - Add to your existing styles.css */
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 15%;
+}
+
+/* Logo */
+.logo img {
+  height: 30px;
+  width: auto;
+  padding-top: 7px;
+}
+
+/* Navigation Links - Hidden on Mobile */
+.right-links {
+  display: flex;
+  gap: 20px;
+  font-family: "Funnel Sans", serif;
+}
+
+@media screen and (max-width: 768px) {
+  .right-links {
+    display: none;
+  }
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+  display: none; /* Hidden by default on larger screens */
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 21px;
+  cursor: pointer;
+  z-index: 1001; /* Increased z-index to be above sidebar */
+  position: relative; /* Ensure it's positioned properly */
+}
+
+.bar {
+  width: 100%;
+  height: 3px;
+  background-color: #ffffff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+@media screen and (max-width: 768px) {
+  .hamburger-menu {
+    display: flex; /* Show hamburger on mobile */
+  }
+}
+
+/* Mobile Sidebar with Glassmorphism */
+.mobile-sidebar {
+  position: fixed;
+  top: 0;
+  right: -280px; /* Start off-screen */
+  width: 280px;
+  height: 100%;
+  /* background-color: rgba(18, 18, 18, 0.8);  */
+  backdrop-filter: blur(10px); /* Blur effect for glass morphism */
+  -webkit-backdrop-filter: blur(10px); /* For Safari support */
+  z-index: 1000;
+  transition: right 0.3s ease;
+  box-shadow: -2px 0 15px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+  border-left: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border for definition */
+}
+
+.mobile-sidebar.active {
+  right: 0; /* Slide in */
+}
+
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  padding: 80px 20px 20px; /* Increased top padding to avoid overlap with hamburger */
+}
+
+.sidebar-link {
+  font-family: "Funnel Sans", serif;
+  font-weight: 800;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.sidebar-link:hover {
+  color: #ffffff;
+  transform: translateX(5px); /* Slight movement on hover */
+}
+
+/* Overlay with Glassmorphism */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* Lighter overlay */
+  backdrop-filter: blur(3px); /* Subtle blur for the overlay */
+  -webkit-backdrop-filter: blur(3px); /* For Safari support */
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.sidebar-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Hamburger Button Position Fix for Mobile */
+@media screen and (max-width: 768px) {
+  .hamburger-menu {
+    display: flex; /* Show hamburger on mobile */
+  }
+}
+
+/* Enhanced animation for active hamburger */
+.hamburger-menu.active .bar:nth-child(1) {
+  transform: translateY(7px) rotate(40deg); /* Adjusted translateY and rotation */
+}
+
+.hamburger-menu.active .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-menu.active .bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-40deg); /* Adjusted translateY and rotation */
 }
