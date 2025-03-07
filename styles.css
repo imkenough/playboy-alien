@@ -21,7 +21,7 @@ body {
   top: 50%; /* Start in the center */
   left: 50%;
   transform: translate(-50%, -50%); /* Center horizontally and vertically */
-  z-index: 1002; /* Ensure it's above everything */
+  z-index: 95; /* Ensure it's above everything */
   width: 60%;
   /* max-width: 800px; */
   padding: 10px 20px;
@@ -50,6 +50,7 @@ body {
   transform: translateX(-50%); /* Center horizontally only */
   /* padding: 10px 20px; */
   width: 100vw;
+  z-index: 105;
   background-color: #000212;
   /* border-bottom: 1px solid #ddd; */
 }
@@ -904,7 +905,7 @@ body {
   width: 30px;
   height: 21px;
   cursor: pointer;
-  z-index: 1001; /* Increased z-index to be above sidebar */
+  z-index: 99; /* Increased z-index to be above sidebar */
   position: relative; /* Ensure it's positioned properly */
 }
 
@@ -932,7 +933,7 @@ body {
   /* background-color: rgba(18, 18, 18, 0.8);  */
   backdrop-filter: blur(10px); /* Blur effect for glass morphism */
   -webkit-backdrop-filter: blur(10px); /* For Safari support */
-  z-index: 1000;
+  z-index: 98;
   transition: right 0.3s ease;
   box-shadow: -2px 0 15px rgba(0, 0, 0, 0.5);
   overflow-y: auto;
@@ -975,7 +976,7 @@ body {
   background-color: rgba(0, 0, 0, 0.3); /* Lighter overlay */
   backdrop-filter: blur(3px); /* Subtle blur for the overlay */
   -webkit-backdrop-filter: blur(3px); /* For Safari support */
-  z-index: 999;
+  z-index: 97;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
