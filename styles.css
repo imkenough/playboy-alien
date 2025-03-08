@@ -1339,7 +1339,11 @@ body.has-recently-watched .rt-search-container-wrapper {
   }
 
   .recently-watched-title {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 15px;
+    text-align: left; /* Add this line to center the text */
   }
 
   .recently-watched-grid {
