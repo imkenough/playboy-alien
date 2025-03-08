@@ -247,6 +247,8 @@ function saveToRecentlyWatched(mediaItem) {
       title: mediaItem.title || mediaItem.name,
       poster_path: mediaItem.poster_path,
       media_type: mediaItem.media_type,
+      release_date: mediaItem.release_date, // Save release date
+      first_air_date: mediaItem.first_air_date, // Save first air date for TV shows
       timestamp: new Date().toISOString(),
     });
 
@@ -426,13 +428,18 @@ function createRecentlyWatchedCard(item) {
     ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
     : "assets/placeholder.png"; // Fallback image if poster_path is not available
 
+  // Extract the year from the release date or first air date
+  const releaseDate = item.release_date || item.first_air_date || "";
+  const year = releaseDate ? new Date(releaseDate).getFullYear() : "N/A";
+
+  // Determine the media type (movie or TV show)
+  const mediaType = item.media_type === "tv" ? "Show" : "Movie";
+
   card.innerHTML = `
-    <img class="recently-watched-card-img" src="${posterUrl}" alt="${
-    item.title
-  }">
+    <img class="recently-watched-card-img" src="${posterUrl}" alt="${item.title}">
     <div class="recently-watched-card-info">
       <h3 class="recently-watched-card-title">${item.title}</h3>
-      <p class="recently-watched-card-meta">${item.year || ""}</p>
+      <p class="recently-watched-card-meta">${mediaType} • ${year}</p>
     </div>
   `;
 

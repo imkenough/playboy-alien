@@ -819,7 +819,7 @@ body {
   font-size: 1.8rem;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 
 /* Grid for recently watched items */
@@ -896,7 +896,7 @@ body.has-recently-watched .rt-search-container-wrapper {
 @media screen and (max-width: 768px) {
   /* Search Container */
   .rt-search-container-wrapper {
-    width: 85%;
+    width: 60%;
   }
 
   .rt-search-input {
@@ -1011,7 +1011,7 @@ body.has-recently-watched .rt-search-container-wrapper {
   /* Recently watched section */
   .recently-watched-section {
     margin-top: 70px;
-    padding: 0 10px;
+    padding: 0 20px;
   }
 
   .recently-watched-title {
