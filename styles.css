@@ -1187,7 +1187,7 @@ body {
 
 /* When recently watched section is present - search moves to top */
 body.has-recently-watched .rt-search-container-wrapper {
-  top: 20px;
+  top: 80px;
   transform: translateX(-50%);
   width: 100vw;
   z-index: 105;
@@ -1242,5 +1242,97 @@ body.has-recently-watched .rt-search-container-wrapper {
 
   .rt-search-container-wrapper.active {
     width: 85% !important; /* Match mobile width */
+  }
+}
+
+/* Recently Watched Section - Reuse Search Results Styling */
+.recently-watched-section {
+  margin-top: 100px; /* More space for search bar above */
+  padding: 0 20px;
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: fadeIn 0.8s forwards;
+  opacity: 0; /* Start hidden */
+  transform: translateY(20px);
+}
+
+/* Fade in animation for Recently Watched */
+.recently-watched-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reuse the same grid layout as search results */
+.recently-watched-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(200px, 1fr)
+  ); /* Same as search results */
+  gap: 15px; /* Same as search results */
+  justify-content: center;
+}
+
+/* Reuse the same card styling as search results */
+.recently-watched-grid .rt-card {
+  width: 100%;
+  background-color: #1c1c1c;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.recently-watched-grid .rt-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.recently-watched-grid .rt-card-img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.recently-watched-grid .rt-card-info {
+  padding: 10px;
+  color: #fff;
+  background-color: #1c1c1c;
+}
+
+.recently-watched-grid .rt-card-title {
+  margin: 0;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.recently-watched-grid .rt-card-meta {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #aaa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  .recently-watched-section {
+    margin-top: 70px; /* Less space on mobile */
+    padding: 0 10px;
+  }
+
+  .recently-watched-title {
+    font-size: 1.5rem;
+  }
+
+  .recently-watched-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+    gap: 10px;
   }
 }
