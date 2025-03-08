@@ -438,3 +438,77 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+// Function to display recently watched items on the homepage
+function displayRecentlyWatched() {
+  try {
+    // Check if feature is enabled
+    if (!shouldShowRecentlyWatched()) {
+      // Remove section if it exists
+      const existingSection = document.querySelector(
+        ".recently-watched-section"
+      );
+      if (existingSection) {
+        existingSection.remove();
+      }
+      document.body.classList.remove("has-recently-watched"); // Remove class
+      return;
+    }
+
+    // Get recently watched items
+    const recentItems =
+      JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)) || [];
+
+    // If no items or not on homepage, return
+    if (
+      recentItems.length === 0 ||
+      !isHomePage() ||
+      !document.getElementById("results-container")
+    )
+      return;
+
+    // Remove existing section if it exists
+    const existingSection = document.querySelector(".recently-watched-section");
+    if (existingSection) {
+      existingSection.remove();
+    }
+
+    // Create recently watched section
+    const recentlyWatchedSection = document.createElement("div");
+    recentlyWatchedSection.className = "recently-watched-section visible";
+    recentlyWatchedSection.innerHTML = `
+      <h2 class="recently-watched-title">Recently Watched</h2>
+      <div class="rt-grid recently-watched-grid"></div>
+    `;
+
+    // Get the search input value
+    const searchInput = document.getElementById("search-input");
+    const isSearching = searchInput && searchInput.value.trim().length > 0;
+
+    // Don't show recently watched when searching
+    if (isSearching) {
+      recentlyWatchedSection.style.display = "none";
+    }
+
+    // Insert before results container
+    const resultsContainer = document.getElementById("results-container");
+    resultsContainer.parentNode.insertBefore(
+      recentlyWatchedSection,
+      resultsContainer
+    );
+
+    // Get the grid to populate
+    const grid = recentlyWatchedSection.querySelector(".recently-watched-grid");
+
+    // Populate with items
+    recentItems.forEach((item) => {
+      const card = createMediaCard(item);
+      grid.appendChild(card);
+    });
+
+    // Add class to body to adjust search bar position
+    document.body.classList.add("has-recently-watched");
+  } catch (error) {
+    console.error("Error displaying recently watched:", error);
+  }
+}

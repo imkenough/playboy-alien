@@ -1168,42 +1168,8 @@ body {
   }
 }
 
-/* Recently Watched Section - Improved Positioning */
-.recently-watched-section {
-  margin-top: 100px; /* More space for search bar above */
-  padding: 0 20px;
-  width: 100%;
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-  animation: fadeIn 0.8s forwards;
-  opacity: 0; /* Start hidden */
-  transform: translateY(20px);
-}
+/* Add this to your existing styles.css file */
 
-/* Fade in animation for Recently Watched */
-.recently-watched-section.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.recently-watched-title {
-  font-size: 1.8rem;
-  color: #ffffff;
-  margin-bottom: 15px;
-  font-weight: 700;
-  padding-bottom: 5px;
-  border-bottom: 1px solid #333;
-}
-
-.recently-watched-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 15px;
-  justify-content: center;
-}
-
-/* Search Container Positioning Logic */
 /* Default search position (centered when no recently watched) */
 .rt-search-container-wrapper {
   position: fixed;
@@ -1233,6 +1199,25 @@ body.has-recently-watched .rt-search-container-wrapper {
   transform: translateX(-50%) !important;
   width: 100vw;
   z-index: 105;
+}
+
+/* Recently Watched Section - Improved Positioning */
+.recently-watched-section {
+  margin-top: 100px; /* More space for search bar above */
+  padding: 0 20px;
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: fadeIn 0.8s forwards;
+  opacity: 0; /* Start hidden */
+  transform: translateY(20px);
+}
+
+/* Fade in animation for Recently Watched */
+.recently-watched-section.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Mobile Responsiveness */
