@@ -606,7 +606,7 @@ body {
   height: 100%;
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(10px);
-  background-color: #6d6e72;
+  background-color: hsla(233, 100%, 4%, 0.4);
   z-index: 98;
   transition: right 0.3s ease;
   box-shadow: -2px 0 15px rgba(0, 0, 0, 0.5);
