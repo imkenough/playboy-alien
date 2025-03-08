@@ -1168,22 +1168,23 @@ body {
   }
 }
 
-/* Recently Watched Section */
+/* Recently Watched Section - Improved Positioning */
 .recently-watched-section {
-  margin-top: 80px; /* Push the section down to make space for the search bar */
-  padding: 0 20px; /* Add some padding */
-  width: 100%; /* Full width */
-  max-width: 1000px; /* Match the max width of the search results */
-  margin-left: auto; /* Center the section */
-  margin-right: auto; /* Center the section */
-  animation: fadeIn 0.8s forwards; /* Fade-in animation */
+  margin-top: 100px; /* More space for search bar above */
+  padding: 0 20px;
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: fadeIn 0.8s forwards;
+  opacity: 0; /* Start hidden */
+  transform: translateY(20px);
 }
 
-@media screen and (max-width: 768px) {
-  .recently-watched-section {
-    margin-top: 60px; /* Adjust for mobile */
-    padding: 0 10px; /* Adjust padding for mobile */
-  }
+/* Fade in animation for Recently Watched */
+.recently-watched-section.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .recently-watched-title {
@@ -1202,11 +1203,43 @@ body {
   justify-content: center;
 }
 
-/* Mobile responsiveness for Recently Watched */
+/* Search Container Positioning Logic */
+/* Default search position (centered when no recently watched) */
+.rt-search-container-wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 95;
+  width: 60%;
+  padding: 10px 20px;
+  background-color: #000212;
+  transition: all 0.5s ease;
+  display: flex;
+  justify-content: center;
+}
+
+/* When recently watched section is present - search moves to top */
+body.has-recently-watched .rt-search-container-wrapper {
+  top: 20px;
+  transform: translateX(-50%);
+  width: 100vw;
+  z-index: 105;
+}
+
+/* When search is focused/active */
+.rt-search-container-wrapper.active {
+  top: 20px !important; /* Override any position */
+  transform: translateX(-50%) !important;
+  width: 100vw;
+  z-index: 105;
+}
+
+/* Mobile Responsiveness */
 @media screen and (max-width: 768px) {
   .recently-watched-section {
+    margin-top: 70px; /* Less space on mobile */
     padding: 0 10px;
-    margin: 20px auto;
   }
 
   .recently-watched-title {
@@ -1214,39 +1247,15 @@ body {
   }
 
   .recently-watched-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
     gap: 10px;
   }
-}
 
-/* Add this to your existing styles.css file */
-
-/* Adjust the search bar position when Recently Watched is visible */
-.recently-watched-section ~ .rt-search-container-wrapper {
-  top: 20px; /* Move the search bar to the top */
-  transform: translateX(-50%); /* Center horizontally */
-  width: 100vw; /* Full width */
-  z-index: 105; /* Ensure it's above everything */
-  background-color: #000212; /* Match the background */
-}
-
-/* Ensure the search bar stays in its normal position when Recently Watched is hidden */
-.rt-search-container-wrapper:not(.active) {
-  top: 50%; /* Center vertically */
-  transform: translate(-50%, -50%); /* Center horizontally and vertically */
-  width: 60%; /* Original width */
-}
-
-/* Adjust the search bar position on mobile */
-@media screen and (max-width: 768px) {
-  .recently-watched-section ~ .rt-search-container-wrapper {
-    top: 10px; /* Adjust for mobile */
-    width: 85%; /* Match mobile width */
+  body.has-recently-watched .rt-search-container-wrapper {
+    width: 85%; /* Narrower on mobile */
   }
-}
 
-/* Add this to your existing styles.css file */
-
-.rt-search-container-wrapper {
-  transition: top 0.3s ease, transform 0.3s ease, width 0.3s ease; /* Smooth transition */
+  .rt-search-container-wrapper.active {
+    width: 85% !important; /* Match mobile width */
+  }
 }
