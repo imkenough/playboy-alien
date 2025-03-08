@@ -271,103 +271,6 @@ function isHomePage() {
   return path === "/" || path.endsWith("index.html") || path === "/index.html";
 }
 
-// Function to display recently watched items on the homepage
-function displayRecentlyWatched() {
-  try {
-    // Check if feature is enabled
-    if (!shouldShowRecentlyWatched()) {
-      // Remove section if it exists
-      const existingSection = document.querySelector(
-        ".recently-watched-section"
-      );
-      if (existingSection) {
-        existingSection.remove();
-      }
-      return;
-    }
-
-    // Get recently watched items
-    const recentItems =
-      JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)) || [];
-
-    // If no items or not on homepage, return
-    if (
-      recentItems.length === 0 ||
-      !isHomePage() ||
-      !document.getElementById("results-container")
-    )
-      return;
-
-    // Remove existing section if it exists
-    const existingSection = document.querySelector(".recently-watched-section");
-    if (existingSection) {
-      existingSection.remove();
-    }
-
-    // Create recently watched section
-    const recentlyWatchedSection = document.createElement("div");
-    recentlyWatchedSection.className = "recently-watched-section";
-    recentlyWatchedSection.innerHTML = `
-      <h2 class="recently-watched-title">Recently Watched</h2>
-      <div class="rt-grid recently-watched-grid"></div>
-    `;
-
-    // Get the search input value
-    const searchInput = document.getElementById("search-input");
-    const isSearching = searchInput && searchInput.value.trim().length > 0;
-
-    // Don't show recently watched when searching
-    if (isSearching) {
-      recentlyWatchedSection.style.display = "none";
-    }
-
-    // Insert before results container
-    const resultsContainer = document.getElementById("results-container");
-    resultsContainer.parentNode.insertBefore(
-      recentlyWatchedSection,
-      resultsContainer
-    );
-
-    // Get the grid to populate
-    const grid = recentlyWatchedSection.querySelector(".recently-watched-grid");
-
-    // Populate with items
-    recentItems.forEach((item) => {
-      const card = createMediaCard(item);
-      grid.appendChild(card);
-    });
-  } catch (error) {
-    console.error("Error displaying recently watched:", error);
-  }
-}
-
-// Helper function to create media card (simplified version)
-function createMediaCard(item) {
-  const card = document.createElement("div");
-  card.className = "rt-card";
-  card.addEventListener("click", () => {
-    // Navigate to media page
-    window.location.href = `${item.media_type}.html?id=${item.id}`;
-  });
-
-  // Build card HTML
-  card.innerHTML = `
-    <img class="rt-card-img" src="${
-      item.poster_path
-        ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-        : "assets/placeholder.png"
-    }" alt="${item.title}" onerror="this.src='assets/placeholder.png'">
-    <div class="rt-card-info">
-      <h3 class="rt-card-title">${item.title}</h3>
-      <p class="rt-card-meta">${
-        item.media_type === "movie" ? "Movie" : "TV Show"
-      }</p>
-    </div>
-  `;
-
-  return card;
-}
-
 // Track media view for specific pages
 function trackMediaView() {
   // Only run on movie/tv pages
@@ -478,7 +381,7 @@ function displayRecentlyWatched() {
     recentlyWatchedSection.className = "recently-watched-section visible";
     recentlyWatchedSection.innerHTML = `
       <h2 class="recently-watched-title">Recently Watched</h2>
-      <div class="rt-grid recently-watched-grid"></div>
+      <div class="recently-watched-grid"></div>
     `;
 
     // Get the search input value
@@ -500,9 +403,9 @@ function displayRecentlyWatched() {
     // Get the grid to populate
     const grid = recentlyWatchedSection.querySelector(".recently-watched-grid");
 
-    // Populate with items
+    // Populate with items - modified to use the new card creation function
     recentItems.forEach((item) => {
-      const card = createMediaCard(item);
+      const card = createRecentlyWatchedCard(item); // New function defined below
       grid.appendChild(card);
     });
 
@@ -513,8 +416,30 @@ function displayRecentlyWatched() {
   }
 }
 
-// Add this to your existing script.js file
+// New helper function to create recently watched cards
+function createRecentlyWatchedCard(item) {
+  const card = document.createElement("div");
+  card.className = "recently-watched-card";
 
+  // Create card content using the new class names
+  card.innerHTML = `
+    <img class="recently-watched-card-img" src="${item.poster}" alt="${
+    item.title
+  }">
+    <div class="recently-watched-card-info">
+      <h3 class="recently-watched-card-title">${item.title}</h3>
+      <p class="recently-watched-card-meta">${item.year || ""}</p>
+    </div>
+  `;
+
+  // Add click event to navigate to the item page
+  card.addEventListener("click", () => {
+    // Assuming you have navigation logic similar to your existing createMediaCard function
+    window.location.href = item.url || `movie.html?id=${item.id}`;
+  });
+
+  return card;
+}
 // Helper function to create media card (simplified version)
 function createMediaCard(item) {
   const card = document.createElement("div");
@@ -540,78 +465,4 @@ function createMediaCard(item) {
   `;
 
   return card;
-}
-
-// Function to display recently watched items on the homepage
-function displayRecentlyWatched() {
-  try {
-    // Check if feature is enabled
-    if (!shouldShowRecentlyWatched()) {
-      // Remove section if it exists
-      const existingSection = document.querySelector(
-        ".recently-watched-section"
-      );
-      if (existingSection) {
-        existingSection.remove();
-      }
-      document.body.classList.remove("has-recently-watched"); // Remove class
-      return;
-    }
-
-    // Get recently watched items
-    const recentItems =
-      JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)) || [];
-
-    // If no items or not on homepage, return
-    if (
-      recentItems.length === 0 ||
-      !isHomePage() ||
-      !document.getElementById("results-container")
-    )
-      return;
-
-    // Remove existing section if it exists
-    const existingSection = document.querySelector(".recently-watched-section");
-    if (existingSection) {
-      existingSection.remove();
-    }
-
-    // Create recently watched section
-    const recentlyWatchedSection = document.createElement("div");
-    recentlyWatchedSection.className = "recently-watched-section visible";
-    recentlyWatchedSection.innerHTML = `
-      <h2 class="recently-watched-title">Recently Watched</h2>
-      <div class="rt-grid recently-watched-grid"></div> <!-- Same class as search results -->
-    `;
-
-    // Get the search input value
-    const searchInput = document.getElementById("search-input");
-    const isSearching = searchInput && searchInput.value.trim().length > 0;
-
-    // Don't show recently watched when searching
-    if (isSearching) {
-      recentlyWatchedSection.style.display = "none";
-    }
-
-    // Insert before results container
-    const resultsContainer = document.getElementById("results-container");
-    resultsContainer.parentNode.insertBefore(
-      recentlyWatchedSection,
-      resultsContainer
-    );
-
-    // Get the grid to populate
-    const grid = recentlyWatchedSection.querySelector(".recently-watched-grid");
-
-    // Populate with items
-    recentItems.forEach((item) => {
-      const card = createMediaCard(item); // Reuse the same card creation function
-      grid.appendChild(card);
-    });
-
-    // Add class to body to adjust search bar position
-    document.body.classList.add("has-recently-watched");
-  } catch (error) {
-    console.error("Error displaying recently watched:", error);
-  }
 }
