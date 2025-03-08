@@ -1207,7 +1207,7 @@ body.has-recently-watched .rt-search-container-wrapper {
 @media screen and (max-width: 768px) {
   .recently-watched-section {
     margin-top: 70px; /* Less space on mobile */
-    padding: 0 10px;
+    /* padding: 0 10px; */
   }
 
   .recently-watched-title {
@@ -1232,24 +1232,6 @@ body.has-recently-watched .rt-search-container-wrapper {
     width: 95% !important; /* Match mobile width */
     z-index: 105 !important;
   }
-}
-
-/* Recently Watched Section - Dedicated Styling */
-.recently-watched-section {
-  margin-top: 100px;
-  padding: 0 20px;
-  width: 100%;
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-  animation: fadeIn 0.8s forwards;
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.recently-watched-section.visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .recently-watched-title {
