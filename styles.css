@@ -604,8 +604,9 @@ body {
   right: -280px;
   width: 280px;
   height: 100%;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(10px);
+  background-color: #6d6e72;
   z-index: 98;
   transition: right 0.3s ease;
   box-shadow: -2px 0 15px rgba(0, 0, 0, 0.5);
@@ -888,7 +889,7 @@ body {
 body.has-recently-watched .rt-search-container-wrapper {
   top: 80px;
   transform: translateX(-50%);
-  width: 100vw;
+  /* width: 100vw; */
   z-index: 96;
 }
 
@@ -896,7 +897,7 @@ body.has-recently-watched .rt-search-container-wrapper {
 @media screen and (max-width: 768px) {
   /* Search Container */
   .rt-search-container-wrapper {
-    width: 60%;
+    width: 85%;
   }
 
   .rt-search-input {
