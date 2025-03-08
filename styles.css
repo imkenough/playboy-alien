@@ -7,29 +7,25 @@ body {
   background-color: #000212;
   font-family: "Funnel Sans", sans-serif;
   transition: all 0.5s ease;
+  scrollbar-width: thin;
+  scrollbar-color: #333 #1c1c1c;
+  overflow-y: auto;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  scrollbar-width: thin;
+  scrollbar-color: #333 #1c1c1c;
 }
 
-/* Search Container Wrapper */
-.rt-search-container-wrapper {
-  position: fixed;
-  top: 50%; /* Start in the center */
-  left: 50%;
-  transform: translate(-50%, -50%); /* Center horizontally and vertically */
-  z-index: 95; /* Ensure it's above everything */
-  width: 60%;
-  /* max-width: 800px; */
-  padding: 10px 20px;
-  background-color: #000212;
-  /* border-bottom: 1px solid #ddd; */
-  transition: all 0.5s ease; /* Smooth transition */
-  display: flex;
-  justify-content: center;
+/* Fade-in Animation */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Keyframes for Fade & Slide Up */
@@ -44,15 +40,73 @@ body {
   }
 }
 
+/* Animation for skeletons */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 15%;
+}
+
+/* Logo */
+.logo img {
+  height: 30px;
+  width: auto;
+  padding-top: 7px;
+}
+
+/* Navigation Links */
+.right-links {
+  display: flex;
+  gap: 20px;
+  font-family: "Funnel Sans", serif;
+}
+
+/* Link Styling */
+.link-main {
+  color: #ffffff;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.link-side {
+  color: #8d93a0;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+/* Search Container Wrapper */
+.rt-search-container-wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 95;
+  width: 60%;
+  padding: 10px 20px;
+  background-color: #000212;
+  transition: all 0.5s ease;
+  display: flex;
+  justify-content: center;
+}
+
 /* Move to top when active */
 .rt-search-container-wrapper.active {
-  top: 20px; /* Move to the top */
-  transform: translateX(-50%); /* Center horizontally only */
-  /* padding: 10px 20px; */
+  top: 20px !important;
+  transform: translateX(-50%) !important;
   width: 100vw;
   z-index: 105;
   background-color: #000212;
-  /* border-bottom: 1px solid #ddd; */
 }
 
 /* Search Container */
@@ -62,7 +116,7 @@ body {
   opacity: 0;
   transform: translateY(20px);
   animation: fadeSlideUp 0.5s ease-out forwards;
-  animation-delay: 0.3s; /* Optional: Delay to sync with other elements */
+  animation-delay: 0.3s;
 }
 
 /* Search Input */
@@ -76,6 +130,8 @@ body {
   color: #ffffff;
   outline: none;
   transition: border-color 0.3s ease;
+  font-family: "Funnel Sans", serif;
+  font-weight: 800;
 }
 
 .rt-search-input::placeholder {
@@ -87,186 +143,15 @@ body {
   border-color: #9b9b9b;
 }
 
-/* Mobile Responsiveness */
-@media screen and (max-width: 768px) {
-  /* Search Container Wrapper */
-  .rt-search-container-wrapper {
-    width: 85%;
-  }
-
-  .rt-search-input {
-    font-size: 1rem;
-  }
-}
-
-/* Centering the Why Content */
-#why-text-wrap {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 100px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: left; /* Center horizontally */
-  justify-content: left; /* Center vertically */ /* Full screen height */
-  animation: fadeIn 0.8s forwards;
-  opacity: 0;
-  transform: translateY(20px);
-  text-align: left; /* Keep text aligned left while centered vertically */
-}
-
-/* Heading */
-#why-head {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  font-weight: 800;
-  /* padding-top: 20px; */
-  color: #ffffff;
-  text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
-}
-
-/* Paragraph */
-.why-para {
-  font-size: 1.2rem;
-  line-height: 1.8;
-  color: #ffffff;
-  margin-bottom: 20px;
-  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* Legal Text */
-.legal-text {
-  color: #ffcc00;
-  font-weight: 700;
-}
-
-/* Mobile Responsiveness */
-@media screen and (max-width: 768px) {
-  /* Why Section */
-  #why-text-wrap {
-    padding: 20px;
-  }
-
-  /* Heading */
-  #why-head {
-    font-size: 2.5rem;
-  }
-
-  /* Paragraph */
-  .why-para {
-    font-size: 1rem;
-  }
-}
-
-/* Fade-in Animation */
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* about me page */
-
-/* Centering the Why Content */
-#about-text-wrap {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 100px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: left; /* Center horizontally */
-  justify-content: left; /* Center vertically */ /* Full screen height */
-  animation: fadeIn 0.8s forwards;
-  opacity: 0;
-  transform: translateY(20px);
-  text-align: left; /* Keep text aligned left while centered vertically */
-}
-
-/* Heading */
-#about-head {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  font-weight: 800;
-  /* padding-top: 20px; */
-  color: #ffffff;
-  text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
-}
-
-/* Paragraph */
-.about-para {
-  font-size: 1.2rem;
-  line-height: 1.8;
-  color: #ffffff;
-  margin-bottom: 20px;
-  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* Fade-in Animation */
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Mobile Responsiveness */
-@media screen and (max-width: 768px) {
-  /* Why Section */
-  #about-text-wrap {
-    padding: 20px;
-  }
-
-  /* Heading */
-  #about-head {
-    font-size: 2.5rem;
-  }
-
-  /* Paragraph */
-  .about-para {
-    font-size: 1rem;
-  }
-}
-
-/* svg stlyes */
-/* Container to align icons side by side */
-.svgg {
-  display: flex;
-  gap: 16px; /* Space between icons */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  margin: 16px 0; /* Vertical spacing */
-}
-
-/* Style SVG links */
-.svgg a {
-  display: inline-flex;
-  transition: filter 0.3s ease, transform 0.2s ease;
-}
-
-/* Default SVG style */
-.svgg a img {
-  width: 32px; /* Set icon size */
-  height: 32px;
-  filter: invert(54%) sepia(4%) saturate(4%) hue-rotate(172deg) brightness(92%)
-    contrast(85%);
-}
-
-/* Hover effect */
-.svgg a:hover img {
-  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%)
-    contrast(100%);
-  transform: scale(1.1); /* Slight zoom effect */
-}
-
 /* Results Container */
 #results-container {
-  margin-top: 20px; /* Push results down to avoid overlap */
+  margin-top: 20px;
   padding: 20px;
   width: 100%;
   max-width: 1000px;
-  z-index: 10; /* Below the search bar */
-  margin-left: auto; /* Center the container */
-  margin-right: auto; /* Center the container */
+  z-index: 10;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Grid Layout */
@@ -285,16 +170,6 @@ body {
   background: linear-gradient(90deg, #2c2c2c 25%, #3a3a3a 50%, #2c2c2c 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite linear;
-}
-
-/* animation */
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
 }
 
 /* Card Styles */
@@ -331,6 +206,8 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-family: "Funnel Sans", serif;
+  font-weight: 700;
 }
 
 .rt-card-meta {
@@ -340,6 +217,8 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-family: "Funnel Sans", serif;
+  font-weight: 300;
 }
 
 /* No Results Message */
@@ -348,96 +227,107 @@ body {
   font-size: 1.5rem;
   text-align: center;
   grid-column: 1 / -1;
-}
-
-/* Apply funnel font to the body or specific elements */
-body {
   font-family: "Funnel Sans", serif;
+  font-weight: 400;
 }
 
-/* Search Input */
-.rt-search-input {
-  font-family: "Funnel Sans", serif;
-  font-weight: 800; /* Adjust weight as needed */
-}
-
-/* Card Title */
-.rt-card-title {
-  font-family: "Funnel Sans", serif;
-  font-weight: 700; /* Adjust weight as needed */
-}
-
-/* Card Meta */
-.rt-card-meta {
-  font-family: "Funnel Sans", serif;
-  font-weight: 300; /* Adjust weight as needed */
-}
-
-/* No Results Message */
-.rt-no-results {
-  font-family: "Funnel Sans", serif;
-  font-weight: 400; /* Adjust weight as needed */
-}
-
-/* reset */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-/* Header */
-.header {
+/* Common text wrap styles */
+#why-text-wrap,
+#about-text-wrap,
+#legal-text-wrap,
+#settings-wrap {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 100px 20px;
   display: flex;
-  justify-content: space-between; /* Space between logo and links */
-  align-items: center;
-  padding: 20px 15%; /* Increase padding for breathing space */
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  animation: fadeIn 0.8s forwards;
+  opacity: 0;
+  transform: translateY(20px);
+  text-align: left;
 }
 
-/* Mobile Responsiveness */
-@media screen and (max-width: 768px) {
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 15%;
-  }
-}
-
-/* Logo */
-.logo img {
-  height: 30px;
-  width: auto;
-  padding-top: 7px;
-}
-
-/* Navigation Links */
-.right-links {
-  display: flex;
-  gap: 20px;
-  font-family: "Funnel Sans", serif;
-}
-
-/* Link Styling */
-.link-main {
+/* Common heading styles */
+#why-head,
+#about-head {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  font-weight: 800;
   color: #ffffff;
-  font-weight: 800;
-  text-decoration: none;
+  text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
 }
 
-.link-side {
+/* Common paragraph styles */
+.why-para,
+.about-para {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #ffffff;
+  margin-bottom: 20px;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Legal Text */
+.legal-text {
+  color: #ffcc00;
+  font-weight: 700;
+}
+
+/* Legal specific styles */
+#legal-text-wrap {
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+}
+
+#legal-head {
+  font-size: 2rem;
+  margin-bottom: 16px;
+  color: #fff;
+  text-align: left;
+}
+
+.legal-para {
+  font-size: 1rem;
+  line-height: 1.6;
   color: #8d93a0;
-  font-weight: 800;
-  text-decoration: none;
+  margin-bottom: 16px;
+  text-align: justify;
 }
 
-/* Content */
-.content {
-  padding: 40px;
-  text-align: center;
+/* SVG styles */
+.svgg {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  margin: 16px 0;
 }
 
-/* Player Container with Grid Layout - BALANCED LAYOUT */
+.svgg a {
+  display: inline-flex;
+  transition: filter 0.3s ease, transform 0.2s ease;
+}
+
+.svgg a img {
+  width: 32px;
+  height: 32px;
+  filter: invert(54%) sepia(4%) saturate(4%) hue-rotate(172deg) brightness(92%)
+    contrast(85%);
+}
+
+.svgg a:hover img {
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%)
+    contrast(100%);
+  transform: scale(1.1);
+}
+
+/* Player Container with Grid Layout */
 #player-container {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -446,14 +336,13 @@ body {
   padding: 20px 5%;
   max-width: 1600px;
   margin: 0 auto;
-  height: calc(100vh - 120px); /* Adjust based on header height */
+  height: calc(100vh - 120px);
 }
 
-/* Player Container - BALANCED HEIGHT */
 #player {
   position: relative;
   width: 100%;
-  height: 100%; /* Fill entire grid cell */
+  height: 100%;
   grid-column: 1;
   grid-row: 1 / span 2;
   background-color: #000;
@@ -461,7 +350,6 @@ body {
   overflow: hidden;
 }
 
-/* Player iframe */
 #player-iframe {
   position: absolute;
   top: 0;
@@ -472,7 +360,7 @@ body {
   border: 1px solid #333;
 }
 
-/* Server Switcher Container - BALANCED HEIGHT */
+/* Server Switcher Container */
 #server-switcher {
   grid-column: 2;
   grid-row: 1;
@@ -481,11 +369,10 @@ body {
   border-radius: 8px;
   width: 100%;
   box-sizing: border-box;
-  /* Set a fixed height - about 20% of the combined space */
   height: 80px;
 }
 
-/* Fix for Radix RadioCards Custom Styling */
+/* Radix Radio Cards Styling */
 .radix-radio-item {
   flex: 1;
   min-width: 100px;
@@ -518,7 +405,6 @@ body {
   outline-offset: 2px;
 }
 
-/* Fix for RadioCards container */
 [data-radix-radio-cards-root] {
   display: flex;
   flex-wrap: wrap;
@@ -527,7 +413,7 @@ body {
   justify-content: center;
 }
 
-/* Season-episode switcher - BALANCED HEIGHT */
+/* Season-episode switcher */
 #season-episode-switcher {
   grid-column: 2;
   grid-row: 2;
@@ -538,107 +424,100 @@ body {
   border-radius: 8px;
   gap: 15px;
   overflow: hidden;
-  /* Fill remaining height after accounting for server switcher + gap */
   height: calc(100% - 0px);
 }
 
-/* Style for the season dropdown */
-#season {
-  padding: 10px;
-  background-color: #2c2c2c; /* Background color */
-  border: 1px solid #333; /* Border */
-  border-radius: 6px; /* Rounded corners */
-  color: #fff; /* Text color */
-  font-family: "Funnel Sans", serif; /* Font */
-  font-size: 1rem; /* Font size */
-  font-weight: 600;
-  width: 100%; /* Full width */
-  cursor: pointer; /* Pointer cursor */
-  appearance: none; /* Remove default arrow */
-  -webkit-appearance: none; /* Remove default arrow for Safari */
-  -moz-appearance: none; /* Remove default arrow for Firefox */
-}
-
-/* Hover effect */
-#season:hover {
-  background-color: #000212; /* Darker background on hover */
-  border-color: #000212; /* Darker border on hover */
-}
-
-/* Enhanced styling for the season dropdown with higher specificity and !important */
+/* Season dropdown styling */
 #season-episode-switcher #season {
   padding: 10px;
-  background-color: #2c2c2c !important; /* Background color with important */
-  border: 1px solid #333 !important; /* Border with important */
-  border-radius: 6px !important; /* Rounded corners with important */
-  color: #fff !important; /* Text color with important */
-  font-family: "Funnel Sans", serif !important; /* Font with important */
-  font-size: 1rem !important; /* Font size with important */
-  width: 100% !important; /* Full width with important */
-  cursor: pointer !important; /* Pointer cursor with important */
-  appearance: none !important; /* Remove default arrow with important */
-  -webkit-appearance: none !important; /* For Safari with important */
-  -moz-appearance: none !important; /* For Firefox with important */
-  outline: none !important; /* Remove outline with important */
-}
-
-/* Custom dropdown arrow */
-#season-episode-switcher #season {
+  background-color: #2c2c2c !important;
+  border: 1px solid #333 !important;
+  border-radius: 6px !important;
+  color: #fff !important;
+  font-family: "Funnel Sans", serif !important;
+  font-size: 1rem !important;
+  width: 100% !important;
+  cursor: pointer !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  outline: none !important;
   background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.6%205.4-7.9%205.4-12.9%200-5-1.9-9.2-5.5-12.7z%22%2F%3E%3C%2Fsvg%3E");
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 12px;
-  padding-right: 30px !important; /* Space for the arrow */
-}
-
-/* Hover effect with higher specificity */
-#season-episode-switcher #season:hover {
-  background-color: #3a3a3a !important; /* Slightly lighter background on hover */
-  border-color: #444 !important; /* Darker border on hover */
-}
-
-/* For when the dropdown is open - target focus state */
-#season-episode-switcher #season:focus {
-  border-color: #444 !important;
-  background-color: #3a3a3a !important;
-  box-shadow: 0 0 0 2px rgba(84, 88, 95, 0.3) !important; /* Subtle glow */
-}
-
-/* Style for the options with higher specificity */
-#season-episode-switcher #season option {
-  background-color: #2c2c2c !important; /* Background color */
-  color: #fff !important; /* Text color */
-  padding: 10px !important; /* Padding */
-  font-family: "Funnel Sans", serif !important; /* Font */
-  font-size: 1rem !important; /* Font size */
+  padding-right: 30px !important;
   font-weight: 600;
 }
 
-/* Override blue highlight color that may be coming from Radix UI */
-/* This targets the select when dropdown is open */
+#season-episode-switcher #season:hover {
+  background-color: #3a3a3a !important;
+  border-color: #444 !important;
+}
+
+#season-episode-switcher #season:focus {
+  border-color: #444 !important;
+  background-color: #3a3a3a !important;
+  box-shadow: 0 0 0 2px rgba(84, 88, 95, 0.3) !important;
+}
+
+#season-episode-switcher #season option {
+  background-color: #2c2c2c !important;
+  color: #fff !important;
+  padding: 10px !important;
+  font-family: "Funnel Sans", serif !important;
+  font-size: 1rem !important;
+  font-weight: 600;
+}
+
 #season-episode-switcher #season::-ms-expand {
   display: none !important;
 }
 
-/* Additional styles to prevent blue focus ring */
 #season-episode-switcher #season:focus-visible {
   outline: none !important;
   border-color: #54585f !important;
 }
 
-/* Override default option highlighting */
 #season-episode-switcher #season option:checked,
 #season-episode-switcher #season option:hover {
   background: #54585f !important;
   color: #fff !important;
 }
 
-/* Episode list container - BALANCED HEIGHT */
+/* Episode list container */
 #episode-list {
   margin-top: 10px;
   overflow-y: auto;
   flex-grow: 1;
   min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: #333 #1c1c1c;
+  max-height: 100%;
+}
+
+#episode-list::-webkit-scrollbar {
+  width: 8px;
+  padding-left: 2px;
+}
+
+#episode-list::-webkit-scrollbar-track {
+  background: #1c1c1c;
+  border-radius: 4px;
+}
+
+#episode-list::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+  border: 2px solid #1c1c1c;
+}
+
+#episode-list::-webkit-scrollbar-button {
+  display: none !important;
+}
+
+#episode-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 /* Episodes list */
@@ -678,7 +557,6 @@ body {
 }
 
 /* Custom Scrollbar Styling */
-/* For Webkit browsers (Chrome, Safari, newer Edge) */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -699,214 +577,16 @@ body {
   background: #555;
 }
 
-/* For Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #333 #1c1c1c;
-}
-
-/* Specifically target the episode list scrollbar for better styling */
-#episode-list {
-  scrollbar-width: thin;
-  scrollbar-color: #333 #1c1c1c;
-}
-
-#episode-list::-webkit-scrollbar {
-  width: 8px;
-  padding-left: 2px;
-}
-
-#episode-list::-webkit-scrollbar-track {
-  background: #1c1c1c;
-  border-radius: 4px;
-}
-
-#episode-list::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 4px;
-  border: 2px solid #1c1c1c;
-}
-
-#episode-list::-webkit-scrollbar-button {
-  display: none !important;
-}
-
-#episode-list::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-/* Ensure overflow behavior is consistent */
-html,
-body {
-  scrollbar-width: thin;
-  scrollbar-color: #333 #1c1c1c;
-  overflow-y: auto;
-}
-
-/* Make sure scrollbars appear consistently when needed */
-#episode-list {
-  overflow-y: auto;
-  max-height: 100%;
-}
-
-/* Mobile Responsive Styles */
-@media screen and (max-width: 768px) {
-  /* Display 2 cards across in the grid */
-  .rt-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
-  /* Player container layout for mobile */
-  #player-container {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto; /* Player, server switcher, season-episode switcher */
-    gap: 10px;
-    padding: 10px;
-    height: auto;
-  }
-
-  /* Player on top */
-  #player {
-    grid-column: 1;
-    grid-row: 1;
-    height: 200px;
-  }
-
-  /* Server switcher */
-  #server-switcher {
-    grid-column: 1;
-    grid-row: 2;
-    height: auto;
-    padding: 5px;
-  }
-
-  /* Ensure server switcher items fit in a single row */
-  [data-radix-radio-cards-root] {
-    display: flex;
-    flex-wrap: nowrap; /* Prevent wrapping */
-    gap: 5px;
-    justify-content: space-between; /* Distribute items evenly */
-  }
-
-  .radix-radio-item {
-    min-width: 80px;
-    max-width: 100px;
-    height: 35px;
-    font-size: 0.8rem;
-    padding: 5px;
-    flex: 1; /* Make items flex to fit */
-  }
-
-  /* Season-episode switcher */
-  #season-episode-switcher {
-    grid-column: 1;
-    grid-row: 3;
-    height: calc(100vh - 400px);
-    padding: 10px;
-    overflow-y: auto;
-  }
-
-  /* Episode list */
-  #episode-list {
-    max-height: 100%;
-    overflow-y: auto;
-  }
-
-  /* Episode items with adaptive sizing */
-  #episodes li {
-    padding: 8px;
-    font-size: 0.9rem;
-    margin-bottom: 6px;
-    min-height: 50px;
-    max-height: calc((100vh - 400px) / 5);
-    overflow: hidden;
-  }
-}
-
-/* Legal Disclaimer Container */
-#legal-text-wrap {
-  max-width: 800px; /* Maintain consistent width */
-  margin: 0 auto; /* Center horizontally */
-  padding: 20px;
-  box-sizing: border-box;
-  /* height: calc(100vh - 40px);  */
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Center vertically */
-  overflow-y: auto; /* Avoid scrolling unless necessary */
-}
-
-/* Heading Style */
-#legal-head {
-  font-size: 2rem;
-  margin-bottom: 16px;
-  color: #fff; /* White text to match dark background */
-  text-align: left;
-}
-
-/* Paragraph Style */
-.legal-para {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #8d93a0; /* Light grey for readability */
-  margin-bottom: 16px;
-  text-align: justify;
-}
-
-/* Optional: Add Smooth Scrolling in the Container */
-#legal-text-wrap::-webkit-scrollbar {
-  width: 8px;
-}
-
-#legal-text-wrap::-webkit-scrollbar-thumb {
-  background-color: #555;
-  border-radius: 4px;
-}
-
-.lmao {
-  color: yellow;
-}
-
-/* Hamburger Menu Styles - Add to your existing styles.css */
-/* Header */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 15%;
-}
-
-/* Logo */
-.logo img {
-  height: 30px;
-  width: auto;
-  padding-top: 7px;
-}
-
-/* Navigation Links - Hidden on Mobile */
-.right-links {
-  display: flex;
-  gap: 20px;
-  font-family: "Funnel Sans", serif;
-}
-
-@media screen and (max-width: 768px) {
-  .right-links {
-    display: none;
-  }
-}
-
-/* Hamburger Menu */
+/* Hamburger Menu Styles */
 .hamburger-menu {
-  display: none; /* Hidden by default on larger screens */
+  display: none;
   flex-direction: column;
   justify-content: space-around;
   width: 30px;
   height: 21px;
   cursor: pointer;
-  z-index: 99; /* Increased z-index to be above sidebar */
-  position: relative; /* Ensure it's positioned properly */
+  z-index: 99;
+  position: relative;
 }
 
 .bar {
@@ -917,37 +597,30 @@ body {
   transition: all 0.3s ease;
 }
 
-@media screen and (max-width: 768px) {
-  .hamburger-menu {
-    display: flex; /* Show hamburger on mobile */
-  }
-}
-
 /* Mobile Sidebar with Glassmorphism */
 .mobile-sidebar {
   position: fixed;
   top: 0;
-  right: -280px; /* Start off-screen */
+  right: -280px;
   width: 280px;
   height: 100%;
-  /* background-color: rgba(18, 18, 18, 0.8);  */
-  backdrop-filter: blur(10px); /* Blur effect for glass morphism */
-  -webkit-backdrop-filter: blur(10px); /* For Safari support */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 98;
   transition: right 0.3s ease;
   box-shadow: -2px 0 15px rgba(0, 0, 0, 0.5);
   overflow-y: auto;
-  border-left: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border for definition */
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .mobile-sidebar.active {
-  right: 0; /* Slide in */
+  right: 0;
 }
 
 .sidebar-content {
   display: flex;
   flex-direction: column;
-  padding: 80px 20px 20px; /* Increased top padding to avoid overlap with hamburger */
+  padding: 80px 20px 20px;
 }
 
 .sidebar-link {
@@ -963,7 +636,7 @@ body {
 
 .sidebar-link:hover {
   color: #ffffff;
-  transform: translateX(5px); /* Slight movement on hover */
+  transform: translateX(5px);
 }
 
 /* Overlay with Glassmorphism */
@@ -973,9 +646,9 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.3); /* Lighter overlay */
-  backdrop-filter: blur(3px); /* Subtle blur for the overlay */
-  -webkit-backdrop-filter: blur(3px); /* For Safari support */
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
   z-index: 97;
   opacity: 0;
   visibility: hidden;
@@ -987,16 +660,9 @@ body {
   visibility: visible;
 }
 
-/* Hamburger Button Position Fix for Mobile */
-@media screen and (max-width: 768px) {
-  .hamburger-menu {
-    display: flex; /* Show hamburger on mobile */
-  }
-}
-
 /* Enhanced animation for active hamburger */
 .hamburger-menu.active .bar:nth-child(1) {
-  transform: translateY(7px) rotate(40deg); /* Adjusted translateY and rotation */
+  transform: translateY(7px) rotate(40deg);
 }
 
 .hamburger-menu.active .bar:nth-child(2) {
@@ -1004,25 +670,10 @@ body {
 }
 
 .hamburger-menu.active .bar:nth-child(3) {
-  transform: translateY(-7px) rotate(-40deg); /* Adjusted translateY and rotation */
+  transform: translateY(-7px) rotate(-40deg);
 }
 
 /* Settings Page Styles */
-#settings-wrap {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 100px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  justify-content: left;
-  animation: fadeIn 0.8s forwards;
-  opacity: 0;
-  transform: translateY(20px);
-  text-align: left;
-}
-
-/* Settings Header */
 #settings-head {
   font-size: 3rem;
   margin-bottom: 30px;
@@ -1146,92 +797,22 @@ body {
   transform: translateX(-50%) translateY(0);
 }
 
-/* Mobile Responsiveness */
-@media screen and (max-width: 768px) {
-  #settings-wrap {
-    padding: 20px;
-  }
-
-  #settings-head {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-  }
-
-  .settings-option {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .toggle-container {
-    margin-left: 0;
-    margin-top: 10px;
-  }
-}
-
-/* When recently watched section is present - search moves to top */
-body.has-recently-watched .rt-search-container-wrapper {
-  top: 80px;
-  transform: translateX(-50%);
-  width: 100vw;
-  z-index: 96;
-}
-
-/* When search is focused/active */
-.rt-search-container-wrapper.active {
-  top: 20px !important; /* Override any position */
-  transform: translateX(-50%) !important;
-  width: 100vw;
-  z-index: 105;
-}
-
-/* Recently Watched Section - Improved Positioning */
+/* Recently Watched Section Styles */
 .recently-watched-section {
-  margin-top: 100px; /* More space for search bar above */
+  margin-top: 100px;
   padding: 0 20px;
   width: 100%;
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
   animation: fadeIn 0.8s forwards;
-  opacity: 0; /* Start hidden */
+  opacity: 0;
   transform: translateY(20px);
 }
 
-/* Fade in animation for Recently Watched */
 .recently-watched-section.visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-/* Mobile Responsiveness */
-@media screen and (max-width: 768px) {
-  .recently-watched-section {
-    margin-top: 70px; /* Less space on mobile */
-    /* padding: 0 10px; */
-  }
-
-  .recently-watched-title {
-    font-size: 1.5rem;
-  }
-
-  .recently-watched-grid {
-    margin-top: 20px;
-    padding: 20px;
-    width: 100%;
-    max-width: 1000px;
-    z-index: 10;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  body.has-recently-watched .rt-search-container-wrapper {
-    width: 80%; /* Narrower on mobile */
-  }
-
-  .rt-search-container-wrapper.active {
-    width: 95% !important; /* Match mobile width */
-    z-index: 105 !important;
-  }
 }
 
 .recently-watched-title {
@@ -1298,8 +879,136 @@ body.has-recently-watched .rt-search-container-wrapper {
   font-weight: 300;
 }
 
+/* Special class */
+.lmao {
+  color: yellow;
+}
+
+/* Specific interaction between body and search */
+body.has-recently-watched .rt-search-container-wrapper {
+  top: 80px;
+  transform: translateX(-50%);
+  width: 100vw;
+  z-index: 96;
+}
+
 /* Mobile Responsiveness */
 @media screen and (max-width: 768px) {
+  /* Search Container */
+  .rt-search-container-wrapper {
+    width: 85%;
+  }
+
+  .rt-search-input {
+    font-size: 1rem;
+  }
+
+  /* Grid Layout */
+  .rt-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  /* Text Sections */
+  #why-text-wrap,
+  #about-text-wrap {
+    padding: 20px;
+  }
+
+  #why-head,
+  #about-head {
+    font-size: 2.5rem;
+  }
+
+  .why-para,
+  .about-para {
+    font-size: 1rem;
+  }
+
+  /* Header and Navigation */
+  .right-links {
+    display: none;
+  }
+
+  .hamburger-menu {
+    display: flex;
+  }
+
+  /* Player container layout for mobile */
+  #player-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 10px;
+    padding: 10px;
+    height: auto;
+  }
+
+  #player {
+    grid-column: 1;
+    grid-row: 1;
+    height: 200px;
+  }
+
+  #server-switcher {
+    grid-column: 1;
+    grid-row: 2;
+    height: auto;
+    padding: 5px;
+  }
+
+  [data-radix-radio-cards-root] {
+    flex-wrap: nowrap;
+    gap: 5px;
+    justify-content: space-between;
+  }
+
+  .radix-radio-item {
+    min-width: 80px;
+    max-width: 100px;
+    height: 35px;
+    font-size: 0.8rem;
+    padding: 5px;
+    flex: 1;
+  }
+
+  #season-episode-switcher {
+    grid-column: 1;
+    grid-row: 3;
+    height: calc(100vh - 400px);
+    padding: 10px;
+    overflow-y: auto;
+  }
+
+  #episodes li {
+    padding: 8px;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+    min-height: 50px;
+    max-height: calc((100vh - 400px) / 5);
+    overflow: hidden;
+  }
+
+  /* Settings Mobile View */
+  #settings-wrap {
+    padding: 20px;
+  }
+
+  #settings-head {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+
+  .settings-option {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .toggle-container {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  /* Recently watched section */
   .recently-watched-section {
     margin-top: 70px;
     padding: 0 10px;
@@ -1310,11 +1019,20 @@ body.has-recently-watched .rt-search-container-wrapper {
     font-weight: 700;
     color: #6d6e72;
     margin-top: 100px;
-    text-align: center; /* Add this line to center the text */
+    text-align: center;
   }
 
   .recently-watched-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+  }
+
+  body.has-recently-watched .rt-search-container-wrapper {
+    width: 80%;
+  }
+
+  .rt-search-container-wrapper.active {
+    width: 95% !important;
+    z-index: 105 !important;
   }
 }
