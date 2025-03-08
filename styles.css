@@ -1177,7 +1177,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 95;
-  width: 60%;
+  width: 80%;
   padding: 10px 20px;
   background-color: #000212;
   transition: all 0.5s ease;
@@ -1190,7 +1190,7 @@ body.has-recently-watched .rt-search-container-wrapper {
   top: 80px;
   transform: translateX(-50%);
   width: 100vw;
-  z-index: 105;
+  z-index: 96;
 }
 
 /* When search is focused/active */
