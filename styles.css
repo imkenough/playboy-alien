@@ -1168,21 +1168,6 @@ body {
   }
 }
 
-/* Default search position (centered when no recently watched) */
-.rt-search-container-wrapper {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 95;
-  width: 80%;
-  padding: 10px 20px;
-  background-color: #000212;
-  transition: all 0.5s ease;
-  display: flex;
-  justify-content: center;
-}
-
 /* When recently watched section is present - search moves to top */
 body.has-recently-watched .rt-search-container-wrapper {
   top: 80px;
@@ -1240,11 +1225,11 @@ body.has-recently-watched .rt-search-container-wrapper {
   }
 
   body.has-recently-watched .rt-search-container-wrapper {
-    width: 85%; /* Narrower on mobile */
+    width: 80%; /* Narrower on mobile */
   }
 
   .rt-search-container-wrapper.active {
-    width: 85% !important; /* Match mobile width */
+    width: 95% !important; /* Match mobile width */
     z-index: 105 !important;
   }
 }
@@ -1341,7 +1326,7 @@ body.has-recently-watched .rt-search-container-wrapper {
   .recently-watched-title {
     font-size: 1.4rem;
     font-weight: 700;
-    color: #fff;
+    color: #6d6e72;
     margin-top: 100px;
     text-align: center; /* Add this line to center the text */
   }
