@@ -58,6 +58,14 @@ if (searchInput) {
     const query = event.target.value.trim();
     moveSearchBar(); // Call moveSearchBar to adjust the search bar position
     debouncedSearch(query); // Trigger the debounced search
+
+    // Hide recently watched when searching
+    const recentlyWatchedSection = document.querySelector(
+      ".recently-watched-section"
+    );
+    if (recentlyWatchedSection) {
+      recentlyWatchedSection.style.display = query ? "none" : "block";
+    }
   });
 }
 
@@ -76,6 +84,9 @@ function renderResults(results) {
         const mediaType = result.media_type; // 'movie' or 'tv'
         const id = result.id; // Unique ID for the movie/show
 
+        // Save to recently watched before navigating
+        saveToRecentlyWatched(result);
+
         if (mediaType === "movie") {
           window.location.href = `movie.html?id=${id}`;
         } else if (mediaType === "tv") {
@@ -86,7 +97,7 @@ function renderResults(results) {
       const img = document.createElement("img");
       img.src = result.poster_path
         ? `https://image.tmdb.org/t/p/w500${result.poster_path}`
-        : "placeholder.png";
+        : "assets/placeholder.png";
       img.alt = result.title || result.name;
       img.className = "rt-card-img";
       card.appendChild(img);
@@ -209,6 +220,12 @@ function saveToRecentlyWatched(mediaItem) {
     // Don't save if feature is disabled
     if (!shouldShowRecentlyWatched()) return;
 
+    // Ensure we have required properties
+    if (!mediaItem || !mediaItem.id) {
+      console.error("Invalid media item:", mediaItem);
+      return;
+    }
+
     // Get existing items
     let recentItems =
       JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)) || [];
@@ -238,16 +255,36 @@ function saveToRecentlyWatched(mediaItem) {
 
     // Save back to localStorage
     localStorage.setItem(RECENTLY_WATCHED_ITEMS, JSON.stringify(recentItems));
+
+    // If on homepage, refresh the recently watched section
+    if (isHomePage()) {
+      displayRecentlyWatched();
+    }
   } catch (error) {
     console.error("Error saving to recently watched:", error);
   }
+}
+
+// Function to check if current page is homepage
+function isHomePage() {
+  const path = window.location.pathname;
+  return path === "/" || path.endsWith("index.html") || path === "/index.html";
 }
 
 // Function to display recently watched items on the homepage
 function displayRecentlyWatched() {
   try {
     // Check if feature is enabled
-    if (!shouldShowRecentlyWatched()) return;
+    if (!shouldShowRecentlyWatched()) {
+      // Remove section if it exists
+      const existingSection = document.querySelector(
+        ".recently-watched-section"
+      );
+      if (existingSection) {
+        existingSection.remove();
+      }
+      return;
+    }
 
     // Get recently watched items
     const recentItems =
@@ -256,9 +293,16 @@ function displayRecentlyWatched() {
     // If no items or not on homepage, return
     if (
       recentItems.length === 0 ||
+      !isHomePage() ||
       !document.getElementById("results-container")
     )
       return;
+
+    // Remove existing section if it exists
+    const existingSection = document.querySelector(".recently-watched-section");
+    if (existingSection) {
+      existingSection.remove();
+    }
 
     // Create recently watched section
     const recentlyWatchedSection = document.createElement("div");
@@ -267,6 +311,15 @@ function displayRecentlyWatched() {
       <h2 class="recently-watched-title">Recently Watched</h2>
       <div class="rt-grid recently-watched-grid"></div>
     `;
+
+    // Get the search input value
+    const searchInput = document.getElementById("search-input");
+    const isSearching = searchInput && searchInput.value.trim().length > 0;
+
+    // Don't show recently watched when searching
+    if (isSearching) {
+      recentlyWatchedSection.style.display = "none";
+    }
 
     // Insert before results container
     const resultsContainer = document.getElementById("results-container");
@@ -299,8 +352,10 @@ function createMediaCard(item) {
 
   // Build card HTML
   card.innerHTML = `
-    <img class="rt-card-img" src="https://image.tmdb.org/t/p/w500${
+    <img class="rt-card-img" src="${
       item.poster_path
+        ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+        : "assets/placeholder.png"
     }" alt="${item.title}" onerror="this.src='assets/placeholder.png'">
     <div class="rt-card-info">
       <h3 class="rt-card-title">${item.title}</h3>
@@ -313,42 +368,73 @@ function createMediaCard(item) {
   return card;
 }
 
-// Call display function when DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  // Only display on homepage
+// Track media view for specific pages
+function trackMediaView() {
+  // Only run on movie/tv pages
   if (
-    window.location.pathname === "/" ||
-    window.location.pathname === "/index.html" ||
-    window.location.pathname === "index.html"
+    !window.location.pathname.includes("movie.html") &&
+    !window.location.pathname.includes("tv.html")
   ) {
-    displayRecentlyWatched();
+    return;
   }
 
-  // For movie.html or tv.html pages, handle saving the viewed content
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
 
-  if (
-    id &&
-    (window.location.pathname.includes("movie.html") ||
-      window.location.pathname.includes("tv.html"))
-  ) {
-    const mediaType = window.location.pathname.includes("movie.html")
-      ? "movie"
-      : "tv";
+  if (!id) return;
 
-    // Check if we have title and poster info from the page
-    // This assumes you have elements with these IDs on your movie/tv pages
-    const titleElement = document.getElementById("media-title");
-    const posterElement = document.getElementById("media-poster");
+  const mediaType = window.location.pathname.includes("movie.html")
+    ? "movie"
+    : "tv";
 
-    if (titleElement && posterElement) {
+  // For movie.html or tv.html pages, save the viewed content when page loads
+  window.addEventListener("load", function () {
+    // Find media title and poster elements
+    const titleElement =
+      document.getElementById("media-title") ||
+      document.querySelector("h1") ||
+      document.querySelector(".title");
+
+    const posterElement =
+      document.getElementById("media-poster") ||
+      document.querySelector(".poster img") ||
+      document.querySelector("img[data-poster-path]");
+
+    if (titleElement) {
+      const title = titleElement.textContent.trim();
+      const posterPath =
+        posterElement?.getAttribute("data-poster-path") ||
+        posterElement
+          ?.getAttribute("src")
+          ?.replace("https://image.tmdb.org/t/p/w500", "") ||
+        null;
+
+      // Save to recently watched
       saveToRecentlyWatched({
         id: id,
-        title: titleElement.textContent,
-        poster_path: posterElement.getAttribute("data-poster-path"),
+        title: title,
+        name: title, // Backup for TV shows
+        poster_path: posterPath,
         media_type: mediaType,
       });
     }
+  });
+}
+
+// Call functions when DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  // Check if we're on the homepage and display recently watched
+  if (isHomePage()) {
+    displayRecentlyWatched();
   }
+
+  // Track media views on movie/tv pages
+  trackMediaView();
+
+  // Listen for settings changes to update display in real-time
+  window.addEventListener("storage", (event) => {
+    if (event.key === SETTINGS_KEY && isHomePage()) {
+      displayRecentlyWatched();
+    }
+  });
 });
