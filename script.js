@@ -421,9 +421,13 @@ function createRecentlyWatchedCard(item) {
   const card = document.createElement("div");
   card.className = "recently-watched-card";
 
-  // Create card content using the new class names
+  // Use the correct property `poster_path` and construct the full URL
+  const posterUrl = item.poster_path
+    ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+    : "assets/placeholder.png"; // Fallback image if poster_path is not available
+
   card.innerHTML = `
-    <img class="recently-watched-card-img" src="${item.poster}" alt="${
+    <img class="recently-watched-card-img" src="${posterUrl}" alt="${
     item.title
   }">
     <div class="recently-watched-card-info">
@@ -434,12 +438,12 @@ function createRecentlyWatchedCard(item) {
 
   // Add click event to navigate to the item page
   card.addEventListener("click", () => {
-    // Assuming you have navigation logic similar to your existing createMediaCard function
-    window.location.href = item.url || `movie.html?id=${item.id}`;
+    window.location.href = item.url || `${item.media_type}.html?id=${item.id}`;
   });
 
   return card;
 }
+
 // Helper function to create media card (simplified version)
 function createMediaCard(item) {
   const card = document.createElement("div");
