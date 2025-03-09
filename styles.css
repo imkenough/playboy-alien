@@ -46,7 +46,7 @@
   --color-background: #ffffff;
   --color-primary: #000000;
   --color-secondary: #333333;
-  --color-card-bg: #f8f8f8;
+  --color-card-bg: ##e5e5e5;
   --color-card-hover: #dddddd;
   --color-border: #cccccc;
   --color-scrollbar-thumb: #bbbbbb;
@@ -493,7 +493,7 @@ body {
 /* Season dropdown styling */
 #season-episode-switcher #season {
   padding: var(--spacing-small);
-  background-color: #2c2c2c !important;
+  background-color: var(--color-background) !important;
   border: 1px solid var(--color-border) !important;
   border-radius: 6px !important;
   color: var(--color-primary) !important;
@@ -591,7 +591,7 @@ body {
 
 #episodes li {
   padding: var(--spacing-small);
-  background-color: #2c2c2c;
+  background-color: var(--color-background);
   border: 1px solid var(--color-border);
   border-radius: 6px;
   cursor: pointer;
@@ -677,6 +677,10 @@ body {
   border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.light-mode .mobile-sidebar {
+  background-color: hsla(0, 0%, 65%, 0.4);
+}
+
 .mobile-sidebar.active {
   right: 0;
 }
@@ -697,6 +701,10 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: color var(--transition-duration) var(--transition-ease),
     transform 0.2s var(--transition-ease);
+}
+
+.light-mode .sidebar-link {
+  color: white;
 }
 
 .sidebar-link:hover {
