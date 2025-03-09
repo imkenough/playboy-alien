@@ -350,15 +350,6 @@ function createRecentlyWatchedSection() {
 function displayRecentlyWatched() {
   console.log("Displaying recently watched items..."); // Debugging log
   try {
-    // Ensure the recently watched section exists
-    const recentlyWatchedSection = createRecentlyWatchedSection();
-    const grid = recentlyWatchedSection.querySelector(".recently-watched-grid");
-
-    // Get the recently watched items from local storage
-    const recentItems =
-      JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)) || [];
-    console.log("Recently watched items from localStorage:", recentItems); // Debugging log
-
     // Check settings to see if recently watched should be shown
     const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
     const showRecentlyWatched =
@@ -366,9 +357,27 @@ function displayRecentlyWatched() {
         ? settings.recently_watched
         : true;
 
-    recentlyWatchedSection.style.display = showRecentlyWatched
-      ? "block"
-      : "none";
+    // If settings say not to show, don't create or update the section
+    if (!showRecentlyWatched) {
+      const existingSection = document.querySelector(
+        ".recently-watched-section"
+      );
+      if (existingSection) {
+        existingSection.style.display = "none";
+      }
+      return;
+    }
+
+    // Ensure the recently watched section exists
+    const recentlyWatchedSection = createRecentlyWatchedSection();
+    recentlyWatchedSection.style.display = "block";
+
+    const grid = recentlyWatchedSection.querySelector(".recently-watched-grid");
+
+    // Get the recently watched items from local storage
+    const recentItems =
+      JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)) || [];
+    console.log("Recently watched items from localStorage:", recentItems); // Debugging log
 
     // Clear the grid before populating it
     grid.innerHTML = "";
@@ -390,6 +399,20 @@ function displayRecentlyWatched() {
     console.error("Error displaying recently watched:", error);
   }
 }
+
+// Listen for setting changes
+document.addEventListener("recentlyWatchedSettingChanged", function (event) {
+  console.log("Recently watched setting changed:", event.detail.show);
+  if (isHomePage()) {
+    const section = document.querySelector(".recently-watched-section");
+    if (section) {
+      section.style.display = event.detail.show ? "block" : "none";
+    } else if (event.detail.show) {
+      // If the section doesn't exist yet but should be shown, display it
+      displayRecentlyWatched();
+    }
+  }
+});
 
 // Helper function to create a recently watched card
 function createRecentlyWatchedCard(item) {
@@ -428,6 +451,18 @@ function createRecentlyWatchedCard(item) {
 // Add functionality to display recently watched items on initial page load
 function initRecentlyWatched() {
   if (isHomePage()) {
+    // Check if recently watched is enabled in settings
+    const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
+    const showRecentlyWatched =
+      settings.recently_watched !== undefined
+        ? settings.recently_watched
+        : true;
+
+    if (!showRecentlyWatched) {
+      // If disabled in settings, don't show the section
+      return;
+    }
+
     // Add some test data if localStorage is empty (for testing purposes)
     if (
       !localStorage.getItem(RECENTLY_WATCHED_ITEMS) ||
@@ -466,90 +501,4 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!darkModeEnabled) {
     document.body.classList.add("light-mode");
   }
-});
-
-function adjustSearchBarPosition() {
-  const searchWrapper = document.getElementById("search-wrapper");
-  const recentlyWatchedSection = document.querySelector(
-    ".recently-watched-section"
-  );
-  const recentItems =
-    JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)) || [];
-
-  if (searchWrapper) {
-    if (recentItems.length > 0 && recentlyWatchedSection) {
-      searchWrapper.classList.remove("no-recently-watched");
-      searchWrapper.classList.add("has-recently-watched");
-    } else {
-      searchWrapper.classList.remove("has-recently-watched");
-      searchWrapper.classList.add("no-recently-watched");
-    }
-  }
-}
-
-// Call this function whenever you update the recently watched content
-function displayRecentlyWatched() {
-  console.log("Displaying recently watched items..."); // Debugging log
-  try {
-    // Ensure the recently watched section exists
-    const recentlyWatchedSection = createRecentlyWatchedSection();
-    const grid = recentlyWatchedSection.querySelector(".recently-watched-grid");
-
-    // Get the recently watched items from local storage
-    const recentItems =
-      JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)) || [];
-    console.log("Recently watched items from localStorage:", recentItems); // Debugging log
-
-    // Check settings to see if recently watched should be shown
-    const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
-    const showRecentlyWatched =
-      settings.recently_watched !== undefined
-        ? settings.recently_watched
-        : true;
-
-    recentlyWatchedSection.style.display = showRecentlyWatched
-      ? "block"
-      : "none";
-
-    // Clear the grid before populating it
-    grid.innerHTML = "";
-
-    if (recentItems.length === 0) {
-      // If there are no items, show a message
-      const emptyMessage = document.createElement("p");
-      emptyMessage.className = "recently-watched-empty";
-      emptyMessage.textContent = "No recently watched items yet";
-      grid.appendChild(emptyMessage);
-    } else {
-      // Populate the grid with recently watched items
-      recentItems.forEach((item) => {
-        const card = createRecentlyWatchedCard(item);
-        grid.appendChild(card);
-      });
-    }
-
-    // Adjust the search bar position based on whether there is recently watched content
-    adjustSearchBarPosition();
-  } catch (error) {
-    console.error("Error displaying recently watched:", error);
-  }
-}
-
-// Call adjustSearchBarPosition on initial load
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM fully loaded and parsed"); // Debugging log
-
-  // Initialize the recently watched section
-  initRecentlyWatched();
-
-  // Apply dark/light mode from settings
-  const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
-  const darkModeEnabled =
-    settings.dark_mode !== undefined ? settings.dark_mode : true;
-  if (!darkModeEnabled) {
-    document.body.classList.add("light-mode");
-  }
-
-  // Adjust the search bar position on initial load
-  adjustSearchBarPosition();
 });

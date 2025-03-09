@@ -47,6 +47,8 @@ function setupEventListeners() {
   });
 
   recentlyWatchedToggle.addEventListener("change", () => {
+    // Immediately update recently watched section visibility
+    updateRecentlyWatchedVisibility(recentlyWatchedToggle.checked);
     saveSettings();
     showSavedMessage();
   });
@@ -59,6 +61,17 @@ function updateDarkMode(enabled) {
   } else {
     document.body.classList.add("light-mode");
   }
+}
+
+// Function to update recently watched visibility
+function updateRecentlyWatchedVisibility(show) {
+  // For the settings page, we don't need to do anything
+  // For the home page, this is handled in the script.js file
+  // But we can broadcast an event for other pages to listen to
+  const event = new CustomEvent("recentlyWatchedSettingChanged", {
+    detail: { show: show },
+  });
+  document.dispatchEvent(event);
 }
 
 // Function to save settings
