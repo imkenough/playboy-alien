@@ -53,6 +53,12 @@
   --color-scrollbar-track: #eeeeee;
   --color-toggle-bg: #bcbcbc;
   --color-toggle-checked: #888888;
+  --color-skeleton: linear-gradient(
+    90deg,
+    #d3d3d3 25%,
+    #c5c5c5 50%,
+    #d3d3d3 75%
+  );
 }
 
 .light-mode .logo img {
