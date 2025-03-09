@@ -195,282 +195,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// Constants for local storage
-const SETTINGS_KEY = "playboy_settings";
-const RECENTLY_WATCHED_KEY = "show_recently_watched";
-const RECENTLY_WATCHED_ITEMS = "recently_watched_items";
-
-// Function to check if recently watched should be shown
-function shouldShowRecentlyWatched() {
-  try {
-    const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
-    // Default to true if setting doesn't exist
-    return settings[RECENTLY_WATCHED_KEY] !== undefined
-      ? settings[RECENTLY_WATCHED_KEY]
-      : true;
-  } catch (error) {
-    console.error("Error reading settings:", error);
-    return true; // Default to true on error
-  }
-}
-
-// Function to save an item to recently watched
-function saveToRecentlyWatched(mediaItem) {
-  try {
-    // Don't save if feature is disabled
-    if (!shouldShowRecentlyWatched()) return;
-
-    // Ensure we have required properties
-    if (!mediaItem || !mediaItem.id) {
-      console.error("Invalid media item:", mediaItem);
-      return;
-    }
-
-    // Get existing items
-    let recentItems =
-      JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)) || [];
-
-    // Check if item already exists
-    const existingIndex = recentItems.findIndex(
-      (item) =>
-        item.id === mediaItem.id && item.media_type === mediaItem.media_type
-    );
-
-    // If exists, remove it (to add it to the front)
-    if (existingIndex !== -1) {
-      recentItems.splice(existingIndex, 1);
-    }
-
-    // Add item to the beginning
-    recentItems.unshift({
-      id: mediaItem.id,
-      title: mediaItem.title || mediaItem.name,
-      poster_path: mediaItem.poster_path,
-      media_type: mediaItem.media_type,
-      release_date: mediaItem.release_date, // Save release date
-      first_air_date: mediaItem.first_air_date, // Save first air date for TV shows
-      timestamp: new Date().toISOString(),
-    });
-
-    // Limit to 10 items
-    recentItems = recentItems.slice(0, 10);
-
-    // Save back to localStorage
-    localStorage.setItem(RECENTLY_WATCHED_ITEMS, JSON.stringify(recentItems));
-
-    // If on homepage, refresh the recently watched section
-    if (isHomePage()) {
-      displayRecentlyWatched();
-    }
-  } catch (error) {
-    console.error("Error saving to recently watched:", error);
-  }
-}
-
-// Function to check if current page is homepage
-function isHomePage() {
-  const path = window.location.pathname;
-  return path === "/" || path.endsWith("index.html") || path === "/index.html";
-}
-
-// Track media view for specific pages
-function trackMediaView() {
-  // Only run on movie/tv pages
-  if (
-    !window.location.pathname.includes("movie.html") &&
-    !window.location.pathname.includes("tv.html")
-  ) {
-    return;
-  }
-
-  const urlParams = new URLSearchParams(window.location.search);
-  const id = urlParams.get("id");
-
-  if (!id) return;
-
-  const mediaType = window.location.pathname.includes("movie.html")
-    ? "movie"
-    : "tv";
-
-  // For movie.html or tv.html pages, save the viewed content when page loads
-  window.addEventListener("load", function () {
-    // Find media title and poster elements
-    const titleElement =
-      document.getElementById("media-title") ||
-      document.querySelector("h1") ||
-      document.querySelector(".title");
-
-    const posterElement =
-      document.getElementById("media-poster") ||
-      document.querySelector(".poster img") ||
-      document.querySelector("img[data-poster-path]");
-
-    if (titleElement) {
-      const title = titleElement.textContent.trim();
-      const posterPath =
-        posterElement?.getAttribute("data-poster-path") ||
-        posterElement
-          ?.getAttribute("src")
-          ?.replace("https://image.tmdb.org/t/p/w500", "") ||
-        null;
-
-      // Save to recently watched
-      saveToRecentlyWatched({
-        id: id,
-        title: title,
-        name: title, // Backup for TV shows
-        poster_path: posterPath,
-        media_type: mediaType,
-      });
-    }
-  });
-}
-
-// Call functions when DOM is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  // Check if we're on the homepage and display recently watched
-  if (isHomePage()) {
-    displayRecentlyWatched();
-  }
-
-  // Track media views on movie/tv pages
-  trackMediaView();
-
-  // Listen for settings changes to update display in real-time
-  window.addEventListener("storage", (event) => {
-    if (event.key === SETTINGS_KEY && isHomePage()) {
-      displayRecentlyWatched();
-    }
-  });
-});
-
-// Function to display recently watched items on the homepage
-function displayRecentlyWatched() {
-  try {
-    const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
-    const showRecentlyWatched = settings["recently_watched"] !== false;
-
-    // Remove the section if the feature is disabled
-    let recentlyWatchedSection = document.querySelector(
-      ".recently-watched-section"
-    );
-    if (!showRecentlyWatched) {
-      if (recentlyWatchedSection) {
-        recentlyWatchedSection.remove();
-      }
-      document.body.classList.remove("has-recently-watched"); // Remove class
-      return;
-    }
-
-    // If already exists and should be shown, return
-    if (recentlyWatchedSection) {
-      recentlyWatchedSection.style.display = "block";
-      return;
-    }
-
-    // Create the section if it doesn’t exist
-    recentlyWatchedSection = document.createElement("div");
-    recentlyWatchedSection.className = "recently-watched-section";
-    recentlyWatchedSection.innerHTML = `
-      <h2 class="recently-watched-title">Recently Watched</h2>
-      <div class="recently-watched-grid"></div>
-    `;
-
-    document.body.insertBefore(
-      recentlyWatchedSection,
-      document.getElementById("results-container")
-    );
-
-    const grid = recentlyWatchedSection.querySelector(".recently-watched-grid");
-    const recentItems =
-      JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)) || [];
-
-    // Populate the grid
-    recentItems.forEach((item) => {
-      const card = createRecentlyWatchedCard(item);
-      grid.appendChild(card);
-    });
-
-    document.body.classList.add("has-recently-watched");
-  } catch (error) {
-    console.error("Error displaying recently watched:", error);
-  }
-}
-
-// New helper function to create recently watched cards
-function createRecentlyWatchedCard(item) {
-  const card = document.createElement("div");
-  card.className = "recently-watched-card";
-
-  // Use the correct property `poster_path` and construct the full URL
-  const posterUrl = item.poster_path
-    ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-    : "assets/placeholder.png"; // Fallback image if poster_path is not available
-
-  // Extract the year from the release date or first air date
-  const releaseDate = item.release_date || item.first_air_date || "";
-  const year = releaseDate ? new Date(releaseDate).getFullYear() : "N/A";
-
-  // Determine the media type (movie or TV show)
-  const mediaType = item.media_type === "tv" ? "Show" : "Movie";
-
-  card.innerHTML = `
-    <img class="recently-watched-card-img" src="${posterUrl}" alt="${item.title}">
-    <div class="recently-watched-card-info">
-      <h3 class="recently-watched-card-title">${item.title}</h3>
-      <p class="recently-watched-card-meta">${mediaType} • ${year}</p>
-    </div>
-  `;
-
-  // Add click event to navigate to the item page
-  card.addEventListener("click", () => {
-    window.location.href = item.url || `${item.media_type}.html?id=${item.id}`;
-  });
-
-  return card;
-}
-
-// Helper function to create media card (simplified version)
-function createMediaCard(item) {
-  const card = document.createElement("div");
-  card.className = "rt-card"; // Same class as search results
-  card.addEventListener("click", () => {
-    // Navigate to media page
-    window.location.href = `${item.media_type}.html?id=${item.id}`;
-  });
-
-  // Build card HTML
-  card.innerHTML = `
-    <img class="rt-card-img" src="${
-      item.poster_path
-        ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-        : "assets/placeholder.png"
-    }" alt="${item.title}" onerror="this.src='assets/placeholder.png'">
-    <div class="rt-card-info">
-      <h3 class="rt-card-title">${item.title}</h3>
-      <p class="rt-card-meta">${
-        item.media_type === "movie" ? "Movie" : "TV Show"
-      }</p>
-    </div>
-  `;
-
-  return card;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  try {
-    const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
-    const darkModeEnabled =
-      settings["dark_mode"] !== undefined ? settings["dark_mode"] : true;
-
-    if (!darkModeEnabled) {
-      document.body.classList.add("light-mode");
-    }
-  } catch (error) {
-    console.error("Error applying dark mode setting:", error);
-  }
-});
-
 //------------------------------------------------------------------------------------------------- Toast Notification Settings --------
 const TOAST_MESSAGE = "Added a light mode feature! check it out in settings"; // Change message here
 const SHOW_TOAST = true; // Set to false to disable the toast
@@ -506,3 +230,110 @@ function showToast(message) {
     setTimeout(() => toast.remove(), 300); // Remove from DOM after fade out
   }, 3000);
 }
+
+// Constants for local storage
+const RECENTLY_WATCHED_ITEMS = "recently_watched_items";
+
+// Function to save an item to recently watched
+function saveToRecentlyWatched(mediaItem) {
+  try {
+    if (!mediaItem || !mediaItem.id) {
+      console.error("Invalid media item:", mediaItem);
+      return;
+    }
+
+    let recentItems =
+      JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)) || [];
+
+    const existingIndex = recentItems.findIndex(
+      (item) =>
+        item.id === mediaItem.id && item.media_type === mediaItem.media_type
+    );
+
+    if (existingIndex !== -1) {
+      recentItems.splice(existingIndex, 1);
+    }
+
+    recentItems.unshift({
+      id: mediaItem.id,
+      title: mediaItem.title || mediaItem.name,
+      poster_path: mediaItem.poster_path,
+      media_type: mediaItem.media_type,
+      release_date: mediaItem.release_date,
+      first_air_date: mediaItem.first_air_date,
+      timestamp: new Date().toISOString(),
+    });
+
+    recentItems = recentItems.slice(0, 10);
+
+    localStorage.setItem(RECENTLY_WATCHED_ITEMS, JSON.stringify(recentItems));
+
+    if (isHomePage()) {
+      displayRecentlyWatched();
+    }
+  } catch (error) {
+    console.error("Error saving to recently watched:", error);
+  }
+}
+
+// Function to check if current page is homepage
+function isHomePage() {
+  const path = window.location.pathname;
+  return path === "/" || path.endsWith("index.html") || path === "/index.html";
+}
+
+// Function to display recently watched items on the homepage
+function displayRecentlyWatched() {
+  try {
+    const recentlyWatchedSection = document.querySelector(
+      ".recently-watched-section"
+    );
+    const grid = recentlyWatchedSection.querySelector(".recently-watched-grid");
+    const recentItems =
+      JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)) || [];
+
+    grid.innerHTML = "";
+
+    recentItems.forEach((item) => {
+      const card = createRecentlyWatchedCard(item);
+      grid.appendChild(card);
+    });
+  } catch (error) {
+    console.error("Error displaying recently watched:", error);
+  }
+}
+
+// Helper function to create recently watched cards
+function createRecentlyWatchedCard(item) {
+  const card = document.createElement("div");
+  card.className = "recently-watched-card";
+
+  const posterUrl = item.poster_path
+    ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+    : "assets/placeholder.png";
+
+  const releaseDate = item.release_date || item.first_air_date || "";
+  const year = releaseDate ? new Date(releaseDate).getFullYear() : "N/A";
+  const mediaType = item.media_type === "tv" ? "Show" : "Movie";
+
+  card.innerHTML = `
+    <img class="recently-watched-card-img" src="${posterUrl}" alt="${item.title}">
+    <div class="recently-watched-card-info">
+      <h3 class="recently-watched-card-title">${item.title}</h3>
+      <p class="recently-watched-card-meta">${mediaType} • ${year}</p>
+    </div>
+  `;
+
+  card.addEventListener("click", () => {
+    window.location.href = `${item.media_type}.html?id=${item.id}`;
+  });
+
+  return card;
+}
+
+// Call functions when DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  if (isHomePage()) {
+    displayRecentlyWatched();
+  }
+});
