@@ -235,6 +235,7 @@ function showToast(message) {
 
 // Constants for local storage
 const RECENTLY_WATCHED_ITEMS = "recently_watched_items";
+const SETTINGS_KEY = "playboy_settings";
 
 // Function to save an item to recently watched
 function saveToRecentlyWatched(mediaItem) {
@@ -294,13 +295,63 @@ function isHomePage() {
   return path === "/" || path.endsWith("index.html") || path === "/index.html";
 }
 
+// Function to create the Recently Watched section if it doesn't exist
+function createRecentlyWatchedSection() {
+  // Check if the section already exists
+  let recentlyWatchedSection = document.querySelector(
+    ".recently-watched-section"
+  );
+  if (!recentlyWatchedSection) {
+    // Get settings for recently watched visibility
+    const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
+    const showRecentlyWatched =
+      settings.recently_watched !== undefined
+        ? settings.recently_watched
+        : true;
+
+    // Create the section
+    recentlyWatchedSection = document.createElement("div");
+    recentlyWatchedSection.className = "recently-watched-section";
+    recentlyWatchedSection.style.display = showRecentlyWatched
+      ? "block"
+      : "none";
+
+    // Create the header
+    const header = document.createElement("h2");
+    header.className = "recently-watched-header";
+    header.textContent = "Recently Watched";
+    recentlyWatchedSection.appendChild(header);
+
+    // Create the grid for the items
+    const grid = document.createElement("div");
+    grid.className = "recently-watched-grid";
+    recentlyWatchedSection.appendChild(grid);
+
+    // Insert after the search wrapper and before the results container
+    const searchWrapper = document.getElementById("search-wrapper");
+    const resultsContainer = document.getElementById("results-container");
+    if (searchWrapper && resultsContainer) {
+      searchWrapper.parentNode.insertBefore(
+        recentlyWatchedSection,
+        resultsContainer
+      );
+    } else {
+      // Fallback: append to the rt-theme-light div
+      const rtTheme = document.querySelector(".rt-theme-light");
+      if (rtTheme) {
+        rtTheme.appendChild(recentlyWatchedSection);
+      }
+    }
+  }
+  return recentlyWatchedSection;
+}
+
 // Function to display recently watched items on the homepage
 function displayRecentlyWatched() {
   console.log("Displaying recently watched items..."); // Debugging log
   try {
-    const recentlyWatchedSection = document.querySelector(
-      ".recently-watched-section"
-    );
+    // Ensure the recently watched section exists
+    const recentlyWatchedSection = createRecentlyWatchedSection();
     const grid = recentlyWatchedSection.querySelector(".recently-watched-grid");
 
     // Get the recently watched items from local storage
@@ -308,14 +359,33 @@ function displayRecentlyWatched() {
       JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)) || [];
     console.log("Recently watched items from localStorage:", recentItems); // Debugging log
 
+    // Check settings to see if recently watched should be shown
+    const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
+    const showRecentlyWatched =
+      settings.recently_watched !== undefined
+        ? settings.recently_watched
+        : true;
+
+    recentlyWatchedSection.style.display = showRecentlyWatched
+      ? "block"
+      : "none";
+
     // Clear the grid before populating it
     grid.innerHTML = "";
 
-    // Populate the grid with recently watched items
-    recentItems.forEach((item) => {
-      const card = createRecentlyWatchedCard(item);
-      grid.appendChild(card);
-    });
+    if (recentItems.length === 0) {
+      // If there are no items, show a message
+      const emptyMessage = document.createElement("p");
+      emptyMessage.className = "recently-watched-empty";
+      emptyMessage.textContent = "No recently watched items yet";
+      grid.appendChild(emptyMessage);
+    } else {
+      // Populate the grid with recently watched items
+      recentItems.forEach((item) => {
+        const card = createRecentlyWatchedCard(item);
+        grid.appendChild(card);
+      });
+    }
   } catch (error) {
     console.error("Error displaying recently watched:", error);
   }
@@ -355,10 +425,45 @@ function createRecentlyWatchedCard(item) {
   return card;
 }
 
+// Add functionality to display recently watched items on initial page load
+function initRecentlyWatched() {
+  if (isHomePage()) {
+    // Add some test data if localStorage is empty (for testing purposes)
+    if (
+      !localStorage.getItem(RECENTLY_WATCHED_ITEMS) ||
+      JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)).length === 0
+    ) {
+      console.log("Adding test data for recently watched");
+      const testData = [
+        {
+          id: 123,
+          title: "Test Movie",
+          poster_path: null, // Will use placeholder
+          media_type: "movie",
+          release_date: "2023-01-01",
+          timestamp: new Date().toISOString(),
+        },
+      ];
+      localStorage.setItem(RECENTLY_WATCHED_ITEMS, JSON.stringify(testData));
+    }
+
+    // Display the recently watched items
+    displayRecentlyWatched();
+  }
+}
+
 // Call functions when the DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM fully loaded and parsed"); // Debugging log
-  if (isHomePage()) {
-    displayRecentlyWatched();
+
+  // Initialize the recently watched section
+  initRecentlyWatched();
+
+  // Apply dark/light mode from settings
+  const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
+  const darkModeEnabled =
+    settings.dark_mode !== undefined ? settings.dark_mode : true;
+  if (!darkModeEnabled) {
+    document.body.classList.add("light-mode");
   }
 });
