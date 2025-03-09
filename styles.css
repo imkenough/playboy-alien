@@ -107,6 +107,18 @@ body {
   }
 }
 
+/* Keyframes for Fade & Slide down */
+@keyframes fadeSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(20px);
+  }
+}
+
 /* Animation for skeletons */
 @keyframes shimmer {
   0% {
@@ -1122,4 +1134,55 @@ body.has-recently-watched .rt-search-container-wrapper {
     width: 95% !important;
     z-index: 105 !important;
   }
+}
+
+.toast-container {
+  position: fixed;
+  top: 20px; /* Default top position */
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  background-color: var(--color-card-bg);
+  color: var(--color-primary);
+  padding: 10px 20px; /* Default padding */
+  border-radius: 8px;
+  box-shadow: var(--shadow-default);
+  font-size: 1rem; /* Default font size */
+  font-weight: 600;
+  display: none; /* Hidden by default */
+  animation: fadeSlideDown 0.2s ease-out forwards;
+  z-index: 1000;
+  white-space: nowrap; /* Prevents text wrapping */
+  max-width: 30%; /* Ensures it fits within smaller screens */
+  margin: 0 auto; /* Center the container within its flex parent */
+  text-align: center; /* Ensures text is centered */
+  box-sizing: border-box; /* Ensures padding is included in the width */
+}
+
+/* Responsive Adjustments for Smaller Screens */
+@media (max-width: 768px) {
+  .toast-container {
+    top: 20px; /* Move closer to the top on smaller screens */
+    padding: 8px 16px; /* Reduce padding for smaller screens */
+    font-size: 0.875rem; /* Slightly smaller font size for mobile */
+    max-width: 48%; /* Allow more width usage on smaller screens */
+    border-radius: 6px; /* Slightly smaller border radius */
+  }
+}
+
+@media (max-width: 480px) {
+  .toast-container {
+    top: 20px; /* Even closer to the top for very small screens */
+    padding: 6px 12px; /* Further reduce padding */
+    font-size: 0.75rem; /* Smaller font size for very small screens */
+    max-width: 80%; /* Use full width on very small screens */
+    border-radius: 4px; /* Smaller border radius */
+  }
+}
+
+/* Show Toast */
+.toast-container.show {
+  display: block;
 }

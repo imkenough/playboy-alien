@@ -470,3 +470,39 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("Error applying dark mode setting:", error);
   }
 });
+
+//------------------------------------------------------------------------------------------------- Toast Notification Settings --------
+const TOAST_MESSAGE = "Added a light mode feature! check it out in settings"; // Change message here
+const SHOW_TOAST = true; // Set to false to disable the toast
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (SHOW_TOAST) {
+    showToast(TOAST_MESSAGE);
+  }
+});
+
+// Function to show toast
+function showToast(message) {
+  // Remove any existing toast first
+  const existingToast = document.querySelector(".toast-container");
+  if (existingToast) {
+    existingToast.remove();
+  }
+
+  // Create toast element
+  const toast = document.createElement("div");
+  toast.className = "toast-container";
+  toast.textContent = message;
+  document.body.appendChild(toast);
+
+  // Show toast with delay
+  setTimeout(() => {
+    toast.classList.add("show");
+  }, 200);
+
+  // Auto-hide after 3 seconds
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.remove(), 300); // Remove from DOM after fade out
+  }, 3000);
+}
