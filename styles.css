@@ -1176,12 +1176,12 @@ body {
   display: block;
 }
 
-.rt-search-container-wrapper.no-recently-watched {
+.rt-search-container-wrapper.no-recently-watched-grid {
   top: 50%;
   transform: translate(-50%, -50%);
 }
 
-.rt-search-container-wrapper.has-recently-watched {
+.rt-search-container-wrapper.has-recently-watched-grid {
   top: 80px; /* Adjust this value as needed */
   transform: translateX(-50%);
 }
