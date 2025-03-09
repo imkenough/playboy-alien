@@ -242,18 +242,22 @@ function saveToRecentlyWatched(mediaItem) {
       return;
     }
 
+    // Get existing items from local storage
     let recentItems =
       JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)) || [];
 
+    // Check if the item already exists
     const existingIndex = recentItems.findIndex(
       (item) =>
         item.id === mediaItem.id && item.media_type === mediaItem.media_type
     );
 
+    // If it exists, remove it to avoid duplicates
     if (existingIndex !== -1) {
       recentItems.splice(existingIndex, 1);
     }
 
+    // Add the new item to the beginning of the list
     recentItems.unshift({
       id: mediaItem.id,
       title: mediaItem.title || mediaItem.name,
@@ -264,10 +268,13 @@ function saveToRecentlyWatched(mediaItem) {
       timestamp: new Date().toISOString(),
     });
 
+    // Limit the list to 10 items
     recentItems = recentItems.slice(0, 10);
 
+    // Save the updated list back to local storage
     localStorage.setItem(RECENTLY_WATCHED_ITEMS, JSON.stringify(recentItems));
 
+    // If on the homepage, refresh the recently watched section
     if (isHomePage()) {
       displayRecentlyWatched();
     }
@@ -276,7 +283,7 @@ function saveToRecentlyWatched(mediaItem) {
   }
 }
 
-// Function to check if current page is homepage
+// Function to check if the current page is the homepage
 function isHomePage() {
   const path = window.location.pathname;
   return path === "/" || path.endsWith("index.html") || path === "/index.html";
@@ -289,11 +296,15 @@ function displayRecentlyWatched() {
       ".recently-watched-section"
     );
     const grid = recentlyWatchedSection.querySelector(".recently-watched-grid");
+
+    // Get the recently watched items from local storage
     const recentItems =
       JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)) || [];
 
+    // Clear the grid before populating it
     grid.innerHTML = "";
 
+    // Populate the grid with recently watched items
     recentItems.forEach((item) => {
       const card = createRecentlyWatchedCard(item);
       grid.appendChild(card);
@@ -303,19 +314,24 @@ function displayRecentlyWatched() {
   }
 }
 
-// Helper function to create recently watched cards
+// Helper function to create a recently watched card
 function createRecentlyWatchedCard(item) {
   const card = document.createElement("div");
   card.className = "recently-watched-card";
 
+  // Construct the poster URL
   const posterUrl = item.poster_path
     ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
     : "assets/placeholder.png";
 
+  // Extract the year from the release date or first air date
   const releaseDate = item.release_date || item.first_air_date || "";
   const year = releaseDate ? new Date(releaseDate).getFullYear() : "N/A";
+
+  // Determine the media type (movie or TV show)
   const mediaType = item.media_type === "tv" ? "Show" : "Movie";
 
+  // Build the card HTML
   card.innerHTML = `
     <img class="recently-watched-card-img" src="${posterUrl}" alt="${item.title}">
     <div class="recently-watched-card-info">
@@ -324,6 +340,7 @@ function createRecentlyWatchedCard(item) {
     </div>
   `;
 
+  // Add a click event to navigate to the item's page
   card.addEventListener("click", () => {
     window.location.href = `${item.media_type}.html?id=${item.id}`;
   });
@@ -331,7 +348,7 @@ function createRecentlyWatchedCard(item) {
   return card;
 }
 
-// Call functions when DOM is loaded
+// Call functions when the DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
   if (isHomePage()) {
     displayRecentlyWatched();
