@@ -502,3 +502,71 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.add("light-mode");
   }
 });
+
+// Update the search bar position based on recently watched section
+function updateSearchPosition() {
+  const searchWrapper = document.getElementById("search-wrapper");
+  const recentlyWatchedSection = document.querySelector(
+    ".recently-watched-section"
+  );
+
+  if (searchWrapper) {
+    // Check if the recently watched section exists and has items
+    if (
+      recentlyWatchedSection &&
+      recentlyWatchedSection.style.display !== "none" &&
+      !recentlyWatchedSection.querySelector(".recently-watched-empty")
+    ) {
+      searchWrapper.classList.remove("no-recently-watched");
+    } else {
+      searchWrapper.classList.add("no-recently-watched");
+    }
+  }
+}
+
+// Modified moveSearchBar function to maintain position with recently watched items
+function moveSearchBar() {
+  const searchWrapper = document.getElementById("search-wrapper");
+  const searchInput = document.getElementById("search-input");
+
+  if (searchWrapper && searchInput) {
+    // Add 'active' class when there's input
+    if (searchInput.value.trim().length > 0) {
+      searchWrapper.classList.add("active");
+    } else {
+      searchWrapper.classList.remove("active");
+    }
+  }
+}
+
+// Update the displayRecentlyWatched function to call updateSearchPosition
+function displayRecentlyWatched() {
+  console.log("Displaying recently watched items...");
+  try {
+    // [existing code...]
+
+    // After populating/updating the recently watched section
+    updateSearchPosition();
+  } catch (error) {
+    console.error("Error displaying recently watched:", error);
+  }
+}
+
+// Call updateSearchPosition when the DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM fully loaded and parsed");
+
+  // Initialize the recently watched section
+  initRecentlyWatched();
+
+  // Update search position based on recently watched items
+  updateSearchPosition();
+
+  // Apply dark/light mode from settings
+  const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
+  const darkModeEnabled =
+    settings.dark_mode !== undefined ? settings.dark_mode : true;
+  if (!darkModeEnabled) {
+    document.body.classList.add("light-mode");
+  }
+});

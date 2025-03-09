@@ -1176,12 +1176,21 @@ body {
   display: block;
 }
 
-.rt-search-container-wrapper.no-recently-watched-grid {
+/* Search container positioning when active (has input) */
+.rt-search-container-wrapper.active {
+  position: fixed;
+  top: 80px;
+  transform: translateX(-50%);
+}
+
+/* Search container when recently watched items are visible */
+.rt-search-container-wrapper.no-recently-watched {
   top: 50%;
   transform: translate(-50%, -50%);
 }
 
-.rt-search-container-wrapper.has-recently-watched-grid {
-  top: 80px; /* Adjust this value as needed */
+/* Override to keep search at top when both conditions are true */
+.rt-search-container-wrapper.active.no-recently-watched {
+  top: 80px;
   transform: translateX(-50%);
 }
