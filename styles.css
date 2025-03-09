@@ -46,12 +46,12 @@
   --color-background: #ffffff;
   --color-primary: #000000;
   --color-secondary: #333333;
-  --color-card-bg: #dbdbdb;
-  --color-card-hover: #dddddd;
+  --color-card-bg: #e5e5e5;
+  --color-card-hover: #bcbcbc;
   --color-border: #cccccc;
   --color-scrollbar-thumb: #bbbbbb;
   --color-scrollbar-track: #eeeeee;
-  --color-toggle-bg: #dddddd;
+  --color-toggle-bg: #bcbcbc;
   --color-toggle-checked: #888888;
 }
 
