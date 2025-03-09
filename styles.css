@@ -41,6 +41,24 @@
   --scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
 }
 
+/* Light Mode Styles */
+.light-mode {
+  --color-background: #ffffff;
+  --color-primary: #000000;
+  --color-secondary: #333333;
+  --color-card-bg: #f8f8f8;
+  --color-card-hover: #dddddd;
+  --color-border: #cccccc;
+  --color-scrollbar-thumb: #bbbbbb;
+  --color-scrollbar-track: #eeeeee;
+  --color-toggle-bg: #dddddd;
+  --color-toggle-checked: #888888;
+}
+
+.light-mode .logo img {
+  filter: invert(1);
+}
+
 /* Reset styles */
 html,
 body {
@@ -649,9 +667,9 @@ body {
   right: -280px;
   width: 280px;
   height: 100%;
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  background-color: hsla(233, 100%, 4%, 0.4);
+  /* background-color: var(--color-background); */
   z-index: 98;
   transition: right var(--transition-duration) var(--transition-ease);
   box-shadow: -2px 0 15px rgba(0, 0, 0, 0.5);
@@ -932,6 +950,12 @@ body {
 /* Special class */
 .lmao {
   color: yellow;
+  text-shadow: none;
+}
+
+.light-mode .lmao {
+  color: rgb(148, 148, 1);
+  text-shadow: none;
 }
 
 /* Specific interaction between body and search */

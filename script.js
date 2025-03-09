@@ -477,3 +477,17 @@ function createMediaCard(item) {
 
   return card;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  try {
+    const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
+    const darkModeEnabled =
+      settings["dark_mode"] !== undefined ? settings["dark_mode"] : true;
+
+    if (!darkModeEnabled) {
+      document.body.classList.add("light-mode");
+    }
+  } catch (error) {
+    console.error("Error applying dark mode setting:", error);
+  }
+});
