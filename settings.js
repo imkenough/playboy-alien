@@ -49,6 +49,7 @@ function setupEventListeners() {
 
   recentlyWatchedToggle.addEventListener("change", () => {
     saveSettings();
+    updateRecentlyWatchedVisibility(); // Ensure it updates immediately
     showSavedMessage();
   });
 
@@ -56,6 +57,20 @@ function setupEventListeners() {
   if (hamburgerMenu && mobileSidebar && sidebarOverlay) {
     hamburgerMenu.addEventListener("click", toggleMobileMenu);
     sidebarOverlay.addEventListener("click", closeMobileMenu);
+  }
+}
+
+function updateRecentlyWatchedVisibility() {
+  const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
+  const showRecentlyWatched = settings["recently_watched"] !== false;
+  const recentlyWatchedSection = document.querySelector(
+    ".recently-watched-section"
+  );
+
+  if (recentlyWatchedSection) {
+    recentlyWatchedSection.style.display = showRecentlyWatched
+      ? "block"
+      : "none";
   }
 }
 
