@@ -231,11 +231,14 @@ function showToast(message) {
   }, 3000);
 }
 
+// recently watched section ----------------------------------------------------------------------
+
 // Constants for local storage
 const RECENTLY_WATCHED_ITEMS = "recently_watched_items";
 
 // Function to save an item to recently watched
 function saveToRecentlyWatched(mediaItem) {
+  console.log("Saving to recently watched:", mediaItem); // Debugging log
   try {
     if (!mediaItem || !mediaItem.id) {
       console.error("Invalid media item:", mediaItem);
@@ -245,6 +248,7 @@ function saveToRecentlyWatched(mediaItem) {
     // Get existing items from local storage
     let recentItems =
       JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)) || [];
+    console.log("Existing recently watched items:", recentItems); // Debugging log
 
     // Check if the item already exists
     const existingIndex = recentItems.findIndex(
@@ -273,6 +277,7 @@ function saveToRecentlyWatched(mediaItem) {
 
     // Save the updated list back to local storage
     localStorage.setItem(RECENTLY_WATCHED_ITEMS, JSON.stringify(recentItems));
+    console.log("Updated recently watched items:", recentItems); // Debugging log
 
     // If on the homepage, refresh the recently watched section
     if (isHomePage()) {
@@ -291,6 +296,7 @@ function isHomePage() {
 
 // Function to display recently watched items on the homepage
 function displayRecentlyWatched() {
+  console.log("Displaying recently watched items..."); // Debugging log
   try {
     const recentlyWatchedSection = document.querySelector(
       ".recently-watched-section"
@@ -300,6 +306,7 @@ function displayRecentlyWatched() {
     // Get the recently watched items from local storage
     const recentItems =
       JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)) || [];
+    console.log("Recently watched items from localStorage:", recentItems); // Debugging log
 
     // Clear the grid before populating it
     grid.innerHTML = "";
@@ -350,6 +357,7 @@ function createRecentlyWatchedCard(item) {
 
 // Call functions when the DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM fully loaded and parsed"); // Debugging log
   if (isHomePage()) {
     displayRecentlyWatched();
   }

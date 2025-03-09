@@ -8,6 +8,7 @@ const SETTINGS_KEY = "playboy_settings";
 
 // Load settings when the page loads
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("Loading settings..."); // Debugging log
   loadSettings();
   setupEventListeners();
 });
@@ -16,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function loadSettings() {
   try {
     const savedSettings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
+    console.log("Loaded settings:", savedSettings); // Debugging log
 
     // Load dark mode setting (default: true)
     const darkModeEnabled =
@@ -71,6 +73,7 @@ function saveSettings() {
 
     // Save to local storage
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(currentSettings));
+    console.log("Settings saved:", currentSettings); // Debugging log
   } catch (error) {
     console.error("Error saving settings:", error);
   }
