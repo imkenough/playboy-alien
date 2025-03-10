@@ -891,7 +891,7 @@ body {
 }
 
 /* Recently Watched Section Styles */
-/* .recently-watched-section {
+.recently-watched-section {
   margin-top: 100px;
   padding: 0 var(--spacing-medium);
   width: 100%;
@@ -913,27 +913,27 @@ body {
   font-weight: 700;
   color: var(--color-primary);
   margin-bottom: var(--spacing-large);
-} */
+}
 
 /* Grid for recently watched items */
-/* .recently-watched-grid {
+.recently-watched-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: var(--spacing-small);
   justify-content: center;
-} */
+}
 
 /* Card styling specific to recently watched */
-/* .recently-watched-card {
+.recently-watched-card {
   width: 100%;
   background-color: var(--color-card-bg);
   border-radius: 10px;
   overflow: hidden;
   transition: transform var(--transition-duration) var(--transition-ease),
     box-shadow var(--transition-duration) var(--transition-ease);
-} */
+}
 
-/* .recently-watched-card:hover {
+.recently-watched-card:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-hover);
 }
@@ -971,7 +971,7 @@ body {
   text-overflow: ellipsis;
   font-family: var(--font-family-secondary);
   font-weight: 300;
-} */
+}
 
 /* Special class */
 .lmao {
@@ -1193,65 +1193,4 @@ body {
 .rt-search-container-wrapper.active.no-recently-watched {
   top: 80px;
   transform: translateX(-50%);
-}
-
-/* Add these styles to your styles.css file */
-.recently-watched-section {
-  margin: 20px 0;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-.recently-watched-header {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
-  color: var(--text-color, #fff);
-}
-
-.recently-watched-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 15px;
-}
-
-.recently-watched-card {
-  cursor: pointer;
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.2s;
-}
-
-.recently-watched-card:hover {
-  transform: scale(1.05);
-}
-
-.recently-watched-card-img {
-  width: 100%;
-  aspect-ratio: 2/3;
-  object-fit: cover;
-}
-
-.recently-watched-card-info {
-  padding: 10px;
-}
-
-.recently-watched-card-title {
-  font-size: 0.9rem;
-  margin: 5px 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.recently-watched-card-meta {
-  font-size: 0.8rem;
-  color: #888;
-}
-
-.recently-watched-empty {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 20px;
-  color: #888;
 }
