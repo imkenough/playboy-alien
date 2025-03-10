@@ -508,6 +508,17 @@ document.addEventListener("themeChanged", (event) => {
   }
 });
 
+//recentlywatchedsettingchanged
+document.addEventListener("recentlyWatchedSettingChanged", (event) => {
+  const show = event.detail.show;
+  const recentlyWatchedSection = document.querySelector(
+    ".recently-watched-section"
+  );
+  if (recentlyWatchedSection) {
+    recentlyWatchedSection.style.display = show ? "block" : "none";
+  }
+});
+
 // Toast Message Component
 function showToast(message, duration = 3000) {
   // Create toast container if it doesn't exist
