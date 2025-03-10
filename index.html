@@ -54,20 +54,25 @@
       </div>
     </header>
 
-    <!-- search containerz -->
-    <div class="rt-search-container-wrapper no-recently-watched" id="search-wrapper">
-      <div class="rt-search-container">
-        <input
-          type="text"
-          id="search-input"
-          class="rt-search-input"
-          placeholder="Search Movies and TV Shows"
-          autocomplete="off"
-        />
+    <!-- Add this container div around your search and results elements in index.html -->
+    <div class="content-container">
+      <!-- search container -->
+      <div
+        class="rt-search-container-wrapper no-recently-watched"
+        id="search-wrapper"
+      >
+        <div class="rt-search-container">
+          <input
+            type="text"
+            id="search-input"
+            class="rt-search-input"
+            placeholder="Search Movies and TV Shows"
+            autocomplete="off"
+          />
+        </div>
       </div>
-    </div>
 
-      <!-- Recently Watched will be displayed here by JavaScript -->
+      <!-- Recently Watched section will be inserted here by JavaScript -->
 
       <!-- Results Container -->
       <div id="results-container" class="rt-grid"></div>
