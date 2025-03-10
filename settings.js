@@ -136,3 +136,38 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
+
+// Fix for hamburger menu on settings page
+document.addEventListener("DOMContentLoaded", function () {
+  const hamburgerMenu = document.querySelector(".hamburger-menu");
+  const mobileSidebar = document.querySelector(".mobile-sidebar");
+  const sidebarOverlay = document.querySelector(".sidebar-overlay");
+
+  if (hamburgerMenu && mobileSidebar && sidebarOverlay) {
+    hamburgerMenu.addEventListener("click", function () {
+      hamburgerMenu.classList.toggle("active");
+      mobileSidebar.classList.toggle("active");
+      sidebarOverlay.classList.toggle("active");
+      document.body.style.overflow = mobileSidebar.classList.contains("active")
+        ? "hidden"
+        : "";
+    });
+
+    sidebarOverlay.addEventListener("click", function () {
+      hamburgerMenu.classList.remove("active");
+      mobileSidebar.classList.remove("active");
+      sidebarOverlay.classList.remove("active");
+      document.body.style.overflow = "";
+    });
+
+    const sidebarLinks = document.querySelectorAll(".sidebar-link");
+    sidebarLinks.forEach((link) => {
+      link.addEventListener("click", function () {
+        hamburgerMenu.classList.remove("active");
+        mobileSidebar.classList.remove("active");
+        sidebarOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+      });
+    });
+  }
+});
