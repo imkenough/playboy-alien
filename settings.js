@@ -11,6 +11,16 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("Loading settings..."); // Debugging log
   loadSettings();
   setupEventListeners();
+
+  // Wait a short moment to ensure script.js has loaded the initHamburgerMenu function
+  setTimeout(() => {
+    // Check if the hamburger menu is already initialized by script.js
+    const hamburgerMenu = document.querySelector(".hamburger-menu");
+    if (hamburgerMenu && !hamburgerMenu.hasInitializedMenu) {
+      // If not initialized by script.js, do our own initialization
+      initSettingsHamburgerMenu();
+    }
+  }, 100);
 });
 
 // Function to load saved settings
@@ -100,50 +110,18 @@ function showSavedMessage() {
   }, 2000);
 }
 
-// Add this to the DOMContentLoaded event listener in settings.js
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("Loading settings..."); // Debugging log
-  loadSettings();
-  setupEventListeners();
-
-  // Initialize hamburger menu if the function exists
-  if (typeof initHamburgerMenu === "function") {
-    initHamburgerMenu();
-  } else {
-    // Fallback initialization if the function isn't available yet
-    const hamburgerMenu = document.querySelector(".hamburger-menu");
-    const mobileSidebar = document.querySelector(".mobile-sidebar");
-    const sidebarOverlay = document.querySelector(".sidebar-overlay");
-
-    if (hamburgerMenu && mobileSidebar && sidebarOverlay) {
-      hamburgerMenu.addEventListener("click", function () {
-        hamburgerMenu.classList.toggle("active");
-        mobileSidebar.classList.toggle("active");
-        sidebarOverlay.classList.toggle("active");
-        document.body.style.overflow = mobileSidebar.classList.contains(
-          "active"
-        )
-          ? "hidden"
-          : "";
-      });
-
-      sidebarOverlay.addEventListener("click", function () {
-        hamburgerMenu.classList.remove("active");
-        mobileSidebar.classList.remove("active");
-        sidebarOverlay.classList.remove("active");
-        document.body.style.overflow = "";
-      });
-    }
-  }
-});
-
-// Fix for hamburger menu on settings page
-document.addEventListener("DOMContentLoaded", function () {
+// Our own hamburger menu initialization for the settings page
+function initSettingsHamburgerMenu() {
   const hamburgerMenu = document.querySelector(".hamburger-menu");
   const mobileSidebar = document.querySelector(".mobile-sidebar");
   const sidebarOverlay = document.querySelector(".sidebar-overlay");
+  const sidebarLinks = document.querySelectorAll(".sidebar-link");
 
   if (hamburgerMenu && mobileSidebar && sidebarOverlay) {
+    // Mark as initialized to prevent duplicate initialization
+    hamburgerMenu.hasInitializedMenu = true;
+
+    // Toggle sidebar when hamburger is clicked
     hamburgerMenu.addEventListener("click", function () {
       hamburgerMenu.classList.toggle("active");
       mobileSidebar.classList.toggle("active");
@@ -153,6 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
         : "";
     });
 
+    // Close sidebar when overlay is clicked
     sidebarOverlay.addEventListener("click", function () {
       hamburgerMenu.classList.remove("active");
       mobileSidebar.classList.remove("active");
@@ -160,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
       document.body.style.overflow = "";
     });
 
-    const sidebarLinks = document.querySelectorAll(".sidebar-link");
+    // Close sidebar when a link is clicked
     sidebarLinks.forEach((link) => {
       link.addEventListener("click", function () {
         hamburgerMenu.classList.remove("active");
@@ -170,4 +149,4 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
-});
+}
