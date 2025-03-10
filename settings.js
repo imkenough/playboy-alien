@@ -99,3 +99,40 @@ function showSavedMessage() {
     settingsSavedMessage.classList.remove("show");
   }, 2000);
 }
+
+// Add this to the DOMContentLoaded event listener in settings.js
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("Loading settings..."); // Debugging log
+  loadSettings();
+  setupEventListeners();
+
+  // Initialize hamburger menu if the function exists
+  if (typeof initHamburgerMenu === "function") {
+    initHamburgerMenu();
+  } else {
+    // Fallback initialization if the function isn't available yet
+    const hamburgerMenu = document.querySelector(".hamburger-menu");
+    const mobileSidebar = document.querySelector(".mobile-sidebar");
+    const sidebarOverlay = document.querySelector(".sidebar-overlay");
+
+    if (hamburgerMenu && mobileSidebar && sidebarOverlay) {
+      hamburgerMenu.addEventListener("click", function () {
+        hamburgerMenu.classList.toggle("active");
+        mobileSidebar.classList.toggle("active");
+        sidebarOverlay.classList.toggle("active");
+        document.body.style.overflow = mobileSidebar.classList.contains(
+          "active"
+        )
+          ? "hidden"
+          : "";
+      });
+
+      sidebarOverlay.addEventListener("click", function () {
+        hamburgerMenu.classList.remove("active");
+        mobileSidebar.classList.remove("active");
+        sidebarOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+      });
+    }
+  }
+});

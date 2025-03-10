@@ -158,8 +158,8 @@ function moveSearchBar() {
   }
 }
 
-// Hamburger Menu and Sidebar Functionality
-document.addEventListener("DOMContentLoaded", function () {
+// Function to initialize hamburger menu functionality
+function initHamburgerMenu() {
   const hamburgerMenu = document.querySelector(".hamburger-menu");
   const mobileSidebar = document.querySelector(".mobile-sidebar");
   const sidebarOverlay = document.querySelector(".sidebar-overlay");
@@ -212,6 +212,11 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+}
+
+// Hamburger Menu and Sidebar Functionality
+document.addEventListener("DOMContentLoaded", function () {
+  initHamburgerMenu();
 });
 
 // Toast Notification Settings
