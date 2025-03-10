@@ -971,8 +971,8 @@ body {
 
 /* Settings Saved Message */
 .settings-message {
-  background-color: var(--color-toggle-checked);
-  color: white;
+  background-color: var(--color-secondary);
+  color: var(--color-background);
   padding: var(--spacing-small) var(--spacing-medium);
   border-radius: 5px;
   margin-top: var(--spacing-medium);
@@ -983,7 +983,7 @@ body {
   transition: opacity var(--transition-duration) var(--transition-ease),
     transform var(--transition-duration) var(--transition-ease);
   position: fixed;
-  bottom: var(--spacing-large);
+  /* bottom: var(--spacing-large); */
   left: 50%;
   transform: translateX(-50%);
   box-shadow: var(--shadow-default);
