@@ -224,56 +224,6 @@ document.addEventListener("DOMContentLoaded", function () {
   applyThemeFromSettings();
 });
 
-// Toast Notification Settings
-const TOAST_MESSAGE =
-  "New themes are now available! Check them out in settings"; // Updated message
-const SHOW_TOAST = true; // Set to false to disable the toast
-
-document.addEventListener("DOMContentLoaded", () => {
-  if (SHOW_TOAST) {
-    showToast(TOAST_MESSAGE);
-  }
-
-  // Initialize Recently Watched
-  initRecentlyWatched();
-});
-
-// Function to show toast
-function showToast(message) {
-  // Remove any existing toast first
-  const existingToast = document.querySelector(".toast-container");
-  if (existingToast) {
-    existingToast.remove();
-  }
-
-  // Create toast element
-  const toast = document.createElement("div");
-  toast.className = "toast-container";
-  toast.textContent = message;
-  document.body.appendChild(toast);
-
-  // Show toast with delay
-  setTimeout(() => {
-    toast.classList.add("show");
-  }, 200);
-
-  // Auto-hide after 3 seconds
-  setTimeout(() => {
-    toast.classList.remove("show");
-    setTimeout(() => toast.remove(), 300); // Remove from DOM after fade out
-  }, 3000);
-}
-
-// Constants for local storage
-const RECENTLY_WATCHED_ITEMS = "recently_watched_items";
-const SETTINGS_KEY = "playboy_settings";
-
-// Function to check if the current page is the homepage
-function isHomePage() {
-  const path = window.location.pathname;
-  return path === "/" || path.endsWith("index.html") || path === "/index.html";
-}
-
 // Function to save an item to recently watched
 function saveToRecentlyWatched(mediaItem) {
   if (!mediaItem || !mediaItem.id) {
@@ -553,3 +503,50 @@ document.addEventListener("themeChanged", (event) => {
     applyThemeFromSettings();
   }
 });
+
+// Toast Message Component
+function showToast(message, duration = 3000) {
+  // Create toast container if it doesn't exist
+  let toastContainer = document.querySelector(".toast-container");
+  if (!toastContainer) {
+    toastContainer = document.createElement("div");
+    toastContainer.className = "toast-container";
+    document.body.appendChild(toastContainer);
+  }
+
+  // Create toast element
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = message;
+
+  // Create close button
+  const closeButton = document.createElement("button");
+  closeButton.className = "toast-close";
+  closeButton.innerHTML = "&times;";
+  closeButton.addEventListener("click", () => {
+    toast.remove();
+  });
+
+  // Append close button to toast
+  toast.appendChild(closeButton);
+
+  // Append toast to container
+  toastContainer.appendChild(toast);
+
+  // Trigger reflow to enable the transition
+  void toast.offsetWidth;
+
+  // Show the toast
+  toast.classList.add("show");
+
+  // Automatically remove the toast after the specified duration
+  if (duration > 0) {
+    setTimeout(() => {
+      toast.classList.remove("show");
+      setTimeout(() => toast.remove(), 300); // Wait for the fade-out transition
+    }, duration);
+  }
+}
+
+//toast message--------------------------------------------:
+showToast("Added color themes! Check out settings", 3000);
