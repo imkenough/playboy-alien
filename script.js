@@ -297,37 +297,31 @@ function isHomePage() {
 
 // Function to create the Recently Watched section if it doesn't exist
 function createRecentlyWatchedSection() {
-  // Check if the section already exists
   let recentlyWatchedSection = document.querySelector(
     ".recently-watched-section"
   );
   if (!recentlyWatchedSection) {
-    // Get settings for recently watched visibility
     const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
     const showRecentlyWatched =
       settings.recently_watched !== undefined
         ? settings.recently_watched
         : true;
 
-    // Create the section
     recentlyWatchedSection = document.createElement("div");
     recentlyWatchedSection.className = "recently-watched-section";
     recentlyWatchedSection.style.display = showRecentlyWatched
       ? "block"
       : "none";
 
-    // Create the header
     const header = document.createElement("h2");
     header.className = "recently-watched-header";
     header.textContent = "Recently Watched";
     recentlyWatchedSection.appendChild(header);
 
-    // Create the grid for the items
     const grid = document.createElement("div");
     grid.className = "recently-watched-grid";
     recentlyWatchedSection.appendChild(grid);
 
-    // Insert after the search wrapper and before the results container
     const searchWrapper = document.getElementById("search-wrapper");
     const resultsContainer = document.getElementById("results-container");
     if (searchWrapper && resultsContainer) {
@@ -336,7 +330,6 @@ function createRecentlyWatchedSection() {
         resultsContainer
       );
     } else {
-      // Fallback: append to the rt-theme-light div
       const rtTheme = document.querySelector(".rt-theme-light");
       if (rtTheme) {
         rtTheme.appendChild(recentlyWatchedSection);
