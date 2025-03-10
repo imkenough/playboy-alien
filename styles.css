@@ -892,7 +892,7 @@ body {
 
 /* Recently Watched Section Styles */
 .recently-watched-section {
-  margin-top: 100px;
+  margin-top: 150px;
   padding: 0 var(--spacing-medium);
   width: 100%;
   max-width: 1000px;
@@ -908,7 +908,7 @@ body {
   transform: translateY(0);
 }
 
-.recently-watched-title {
+.recently-watched-header {
   font-size: 1.8rem;
   font-weight: 700;
   color: var(--color-primary);
@@ -1176,14 +1176,14 @@ body {
   display: block;
 }
 
-/* Apply Style A when both class1 and class2 are present */
-.rt-search-container-wrapper.recently-watched-grid {
-  top: 50%;
+/* For when recently watched section exists and has content */
+.rt-search-container-wrapper:not(.no-recently-watched) {
+  top: 150px;
   transform: translate(-50%, -50%);
 }
 
-/* Apply Style B when only class1 is present */
-.rt-search-container-wrapper:not(.recently-watched-grid) {
-  top: 80px;
+/* For when recently watched section doesn't exist or is empty */
+.rt-search-container-wrapper.no-recently-watched {
+  top: 45%;
   transform: translateX(-50%);
 }
