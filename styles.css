@@ -29,7 +29,7 @@
   --spacing-large: 30px;
 
   /* Transitions */
-  --transition-duration: 0.3s;
+  --transition-duration: 0.4s;
   --transition-ease: ease;
 
   /* Shadows */
@@ -973,6 +973,31 @@ body {
   font-weight: 300;
 }
 
+/* For when recently watched section exists and has content */
+.rt-search-container-wrapper:not(.no-recently-watched) {
+  top: 150px;
+  transform: translate(-50%, -50%);
+}
+
+/* For when recently watched section doesn't exist or is empty */
+.rt-search-container-wrapper.no-recently-watched {
+  top: 45%;
+  transform: translateX(-50%);
+}
+
+@media screen and (max-width: 768px) {
+  .rt-search-container-wrapper:not(.no-recently-watched) {
+    top: 120px;
+    transform: translate(-50%, -50%);
+  }
+
+  /* For when recently watched section doesn't exist or is empty */
+  .rt-search-container-wrapper.no-recently-watched {
+    top: 45%;
+    transform: translateX(-50%);
+  }
+}
+
 /* Special class */
 .lmao {
   color: yellow;
@@ -1102,7 +1127,7 @@ body {
 
   /* Recently watched section */
   .recently-watched-section {
-    margin-top: 70px;
+    margin-top: 120px;
     padding: 0 var(--spacing-medium);
   }
 
@@ -1174,16 +1199,4 @@ body {
 /* Show Toast */
 .toast-container.show {
   display: block;
-}
-
-/* For when recently watched section exists and has content */
-.rt-search-container-wrapper:not(.no-recently-watched) {
-  top: 150px;
-  transform: translate(-50%, -50%);
-}
-
-/* For when recently watched section doesn't exist or is empty */
-.rt-search-container-wrapper.no-recently-watched {
-  top: 45%;
-  transform: translateX(-50%);
 }
