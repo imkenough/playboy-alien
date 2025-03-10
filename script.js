@@ -500,3 +500,28 @@ document.addEventListener("recentlyWatchedSettingChanged", (event) => {
     }
   }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const searchInput = document.getElementById("search-input");
+  const clearSearch = document.getElementById("clear-search");
+
+  if (searchInput && clearSearch) {
+    // Show/hide the clear button based on input
+    searchInput.addEventListener("input", () => {
+      if (searchInput.value.trim().length > 0) {
+        clearSearch.style.opacity = "1";
+        clearSearch.style.visibility = "visible";
+      } else {
+        clearSearch.style.opacity = "0";
+        clearSearch.style.visibility = "hidden";
+      }
+    });
+
+    // Clear the search input and reset the search bar
+    clearSearch.addEventListener("click", () => {
+      searchInput.value = "";
+      searchInput.dispatchEvent(new Event("input")); // Trigger the input event to update the UI
+      moveSearchBar(); // Reset the search bar position
+    });
+  }
+});

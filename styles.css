@@ -1200,3 +1200,27 @@ body {
 .toast-container.show {
   display: block;
 }
+
+/* search clearning thing */
+.clear-search {
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 2.5rem;
+  color: var(--color-secondary);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-duration) var(--transition-ease),
+    visibility var(--transition-duration) var(--transition-ease);
+}
+
+.clear-search:hover {
+  color: var(--color-primary);
+}
+
+.rt-search-container-wrapper.active .clear-search {
+  opacity: 1;
+  visibility: visible;
+}
