@@ -269,8 +269,11 @@ function saveToRecentlyWatched(mediaItem) {
     localStorage.setItem(RECENTLY_WATCHED_ITEMS, JSON.stringify(recentItems));
 
     // If on the homepage, refresh the recently watched section
-    if (isHomePage()) {
-      displayRecentlyWatched();
+    function isHomePage() {
+      return (
+        window.location.pathname.endsWith("index.html") ||
+        window.location.pathname === "/"
+      );
     }
   } catch (error) {
     console.error("Error saving to recently watched:", error);
@@ -306,6 +309,13 @@ function createRecentlyWatchedSection() {
   }
 
   return section;
+}
+
+function isHomePage() {
+  return (
+    window.location.pathname.endsWith("index.html") ||
+    window.location.pathname === "/"
+  );
 }
 
 // Function to display recently watched items
@@ -562,6 +572,11 @@ function showToast(message, duration = 3000) {
     }, duration);
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOMContentLoaded event fired"); // Debugging
+  displayRecentlyWatched();
+});
 
 //toast message--------------------------------------------:
 showToast("Added color themes! Check out settings", 3000);
