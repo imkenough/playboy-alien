@@ -41,7 +41,7 @@
   --scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
 }
 
-/* Light Mode Styles */
+/* Light Mode Styles original */
 .light-mode {
   --color-background: #ffffff;
   --color-primary: #000000;
@@ -63,6 +63,110 @@
 
 .light-mode .logo img {
   filter: invert(1);
+}
+
+.green-mode {
+  --color-background: #1e4830; /*5*/
+  --color-primary: #efd0ca; /*1*/
+  --color-secondary: #c1bcac; /*2*/
+  --color-card-bg: #5c7457; /*4*/
+  --color-card-hover: #979b8d; /*3*/
+  --color-border: #cccccc;
+  --color-scrollbar-thumb: #bbbbbb;
+  --color-scrollbar-track: #eeeeee;
+  --color-toggle-bg: #c1bcac; /*2*/
+  --color-toggle-checked: #1e4830; /*5*/
+  --color-skeleton: linear-gradient(
+    90deg,
+    #d3d3d3 25%,
+    #c5c5c5 50%,
+    #d3d3d3 75%
+  );
+}
+
+.orange-mode {
+  --color-background: #2c0703; /*5*/
+  --color-primary: #ebd4cb; /*1*/
+  --color-secondary: #da9f93; /*2*/
+  --color-card-bg: #890620; /*4*/
+  --color-card-hover: #b6465f; /*3*/
+  --color-border: #cccccc;
+  --color-scrollbar-thumb: #bbbbbb;
+  --color-scrollbar-track: #eeeeee;
+  --color-toggle-bg: #da9f93; /*2*/
+  --color-toggle-checked: #2c0703; /*5*/
+  --color-skeleton: linear-gradient(
+    90deg,
+    #d3d3d3 25%,
+    #c5c5c5 50%,
+    #d3d3d3 75%
+  );
+}
+
+.purple-mode {
+  --color-background: #522e38; /*5*/
+  --color-primary: #ffe0e9; /*1*/
+  --color-secondary: #ff9ebb; /*2*/
+  --color-card-bg: #8a2846; /*4*/
+  --color-card-hover: #e05780; /*3*/
+  --color-border: #cccccc;
+  --color-scrollbar-thumb: #bbbbbb;
+  --color-scrollbar-track: #eeeeee;
+  --color-toggle-bg: #ff9ebb; /*2*/
+  --color-toggle-checked: #522e38; /*5*/
+  --color-skeleton: linear-gradient(
+    90deg,
+    #d3d3d3 25%,
+    #c5c5c5 50%,
+    #d3d3d3 75%
+  );
+}
+
+.theme-selector {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.theme-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 3px solid transparent;
+}
+
+.theme-circle.active {
+  transform: scale(1.1);
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Theme circle colors */
+.default-theme {
+  /* background: linear-gradient(135deg, #1a1a1a 50%, #333333 50%); */
+  background-color: #1a1a1a;
+}
+
+.light-theme {
+  /* background: linear-gradient(135deg, #ffffff 50%, #bcbcbc 50%); */
+  background-color: #ffffff;
+}
+
+.green-theme {
+  /* background: linear-gradient(135deg, #1e4830 50%, #979b8d 50%); */
+  background-color: #2dc653;
+}
+
+.purple-theme {
+  /* background: linear-gradient(135deg, #522e38 50%, #e05780 50%); */
+  background-color: #f20089;
+}
+
+.orange-theme {
+  /* background: linear-gradient(135deg, #2c0703 50%, #b6465f 50%); */
+  background-color: #d00000;
 }
 
 /* Reset styles */

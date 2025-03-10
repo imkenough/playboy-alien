@@ -1,10 +1,34 @@
 // DOM elements
 const recentlyWatchedToggle = document.getElementById("recentlyWatchedToggle");
-const darkModeToggle = document.getElementById("darkModeToggle");
 const settingsSavedMessage = document.getElementById("settingsSaved");
+const themeCircles = document.querySelectorAll(".theme-circle");
 
 // Key for storing settings in local storage
 const SETTINGS_KEY = "playboy_settings";
+
+// Theme definitions
+const THEMES = {
+  default: {
+    name: "default",
+    class: "",
+  },
+  light: {
+    name: "light",
+    class: "light-mode",
+  },
+  green: {
+    name: "green",
+    class: "green-mode",
+  },
+  purple: {
+    name: "purple",
+    class: "purple-mode",
+  },
+  orange: {
+    name: "orange",
+    class: "orange-mode",
+  },
+};
 
 // Load settings when the page loads
 document.addEventListener("DOMContentLoaded", () => {
@@ -29,20 +53,25 @@ function loadSettings() {
     const savedSettings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
     console.log("Loaded settings:", savedSettings); // Debugging log
 
-    // Load dark mode setting (default: true)
-    const darkModeEnabled =
-      savedSettings["dark_mode"] !== undefined
-        ? savedSettings["dark_mode"]
-        : true;
-    darkModeToggle.checked = darkModeEnabled;
-    updateDarkMode(darkModeEnabled);
-
     // Load recently watched setting (default: true)
     const showRecentlyWatched =
       savedSettings["recently_watched"] !== undefined
         ? savedSettings["recently_watched"]
         : true;
     recentlyWatchedToggle.checked = showRecentlyWatched;
+
+    // Load theme setting (default: 'default')
+    const currentTheme = savedSettings["theme"] || "default";
+    updateTheme(currentTheme);
+
+    // Mark the active theme in the UI
+    themeCircles.forEach((circle) => {
+      if (circle.getAttribute("data-theme") === currentTheme) {
+        circle.classList.add("active");
+      } else {
+        circle.classList.remove("active");
+      }
+    });
   } catch (error) {
     console.error("Error loading settings:", error);
   }
@@ -50,27 +79,28 @@ function loadSettings() {
 
 // Function to set up event listeners
 function setupEventListeners() {
-  darkModeToggle.addEventListener("change", () => {
-    updateDarkMode(darkModeToggle.checked);
-    saveSettings();
-    showSavedMessage();
-  });
-
   recentlyWatchedToggle.addEventListener("change", () => {
     // Immediately update recently watched section visibility
     updateRecentlyWatchedVisibility(recentlyWatchedToggle.checked);
     saveSettings();
     showSavedMessage();
   });
-}
 
-// Function to update dark mode
-function updateDarkMode(enabled) {
-  if (enabled) {
-    document.body.classList.remove("light-mode");
-  } else {
-    document.body.classList.add("light-mode");
-  }
+  // Add event listeners for theme selection
+  themeCircles.forEach((circle) => {
+    circle.addEventListener("click", () => {
+      const theme = circle.getAttribute("data-theme");
+      updateTheme(theme);
+      saveSettings();
+      showSavedMessage();
+
+      // Dispatch an event to notify other scripts of the theme change
+      const event = new CustomEvent("themeChanged", {
+        detail: { theme: theme },
+      });
+      document.dispatchEvent(event);
+    });
+  });
 }
 
 // Function to update recently watched visibility
@@ -84,6 +114,39 @@ function updateRecentlyWatchedVisibility(show) {
   document.dispatchEvent(event);
 }
 
+// In settings.js - update the updateTheme function
+function updateTheme(themeName) {
+  // Remove all theme classes
+  Object.values(THEMES).forEach((theme) => {
+    if (theme.class) {
+      document.body.classList.remove(theme.class);
+    }
+  });
+
+  // Add new theme class
+  const theme = THEMES[themeName];
+  if (theme && theme.class) {
+    document.body.classList.add(theme.class);
+  }
+
+  // Update active state on circles
+  themeCircles.forEach((circle) => {
+    if (circle.getAttribute("data-theme") === themeName) {
+      circle.classList.add("active");
+    } else {
+      circle.classList.remove("active");
+    }
+  });
+
+  // Dispatch an event to notify script.js
+  const event = new CustomEvent("themeChanged", {
+    detail: { theme: themeName },
+  });
+  document.dispatchEvent(event);
+
+  console.log(`Theme updated to: ${themeName}, class: ${theme?.class}`); // Debugging
+}
+
 // Function to save settings
 function saveSettings() {
   try {
@@ -91,8 +154,18 @@ function saveSettings() {
       JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
 
     // Update settings
-    currentSettings["dark_mode"] = darkModeToggle.checked;
     currentSettings["recently_watched"] = recentlyWatchedToggle.checked;
+
+    // Get active theme
+    const activeThemeCircle = document.querySelector(".theme-circle.active");
+    if (activeThemeCircle) {
+      currentSettings["theme"] = activeThemeCircle.getAttribute("data-theme");
+    }
+
+    // Remove the old dark_mode setting if it exists
+    if ("dark_mode" in currentSettings) {
+      delete currentSettings["dark_mode"];
+    }
 
     // Save to local storage
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(currentSettings));

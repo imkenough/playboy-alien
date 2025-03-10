@@ -69,6 +69,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  // Apply theme immediately when DOM is loaded
+  applyThemeFromSettings();
 });
 
 // Render the results
@@ -217,10 +220,13 @@ function initHamburgerMenu() {
 // Hamburger Menu and Sidebar Functionality
 document.addEventListener("DOMContentLoaded", function () {
   initHamburgerMenu();
+  // Apply theme immediately on all pages
+  applyThemeFromSettings();
 });
 
 // Toast Notification Settings
-const TOAST_MESSAGE = "Added a light mode feature! check it out in settings"; // Change message here
+const TOAST_MESSAGE =
+  "New themes are now available! Check them out in settings"; // Updated message
 const SHOW_TOAST = true; // Set to false to disable the toast
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -230,9 +236,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize Recently Watched
   initRecentlyWatched();
-
-  // Apply dark/light mode from settings
-  applyThemeFromSettings();
 });
 
 // Function to show toast
@@ -481,28 +484,41 @@ function initRecentlyWatched() {
   displayRecentlyWatched();
 }
 
-// Apply theme from settings
+// Apply theme from settings - This is the key function
+// In script.js - update applyThemeFromSettings function
 function applyThemeFromSettings() {
   const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
-  const darkModeEnabled =
-    settings.dark_mode !== undefined ? settings.dark_mode : true;
 
-  if (!darkModeEnabled) {
-    document.body.classList.add("light-mode");
-  } else {
-    document.body.classList.remove("light-mode");
+  // Apply theme
+  const theme = settings.theme || "default";
+  const THEMES = {
+    default: "",
+    light: "light-mode",
+    green: "green-mode",
+    purple: "purple-mode",
+    orange: "orange-mode",
+  };
+
+  // Remove all theme classes first
+  Object.values(THEMES).forEach((themeClass) => {
+    if (themeClass) {
+      document.body.classList.remove(themeClass);
+    }
+  });
+
+  // Apply selected theme
+  if (THEMES[theme]) {
+    document.body.classList.add(THEMES[theme]);
   }
+
+  console.log(`Applied theme from settings: ${theme}, class: ${THEMES[theme]}`); // Debugging
 }
 
-// Listen for settings changes
-document.addEventListener("recentlyWatchedSettingChanged", (event) => {
-  if (isHomePage() && event.detail) {
-    if (event.detail.show) {
-      displayRecentlyWatched();
-    } else {
-      const section = document.querySelector(".recently-watched-section");
-      if (section) section.style.display = "none";
-    }
+// Add this event listener at the end of script.js
+document.addEventListener("themeChanged", (event) => {
+  console.log("Theme change event received:", event.detail); // Debugging
+  if (event.detail && event.detail.theme) {
+    applyThemeFromSettings();
   }
 });
 
@@ -528,5 +544,12 @@ document.addEventListener("DOMContentLoaded", () => {
       searchInput.dispatchEvent(new Event("input")); // Trigger the input event to update the UI
       moveSearchBar(); // Reset the search bar position
     });
+  }
+});
+
+// Listen for theme changes from settings.js
+document.addEventListener("themeChanged", (event) => {
+  if (event.detail && event.detail.theme) {
+    applyThemeFromSettings();
   }
 });
