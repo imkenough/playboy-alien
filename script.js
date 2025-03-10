@@ -1,3 +1,7 @@
+// In script.js
+const SETTINGS_KEY = "playboy_settings";
+const RECENTLY_WATCHED_ITEMS = "recently_watched_items";
+
 // Debounce function to limit how often the search is performed
 function debounce(func, delay) {
   let timeoutId;
