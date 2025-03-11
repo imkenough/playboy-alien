@@ -48,7 +48,7 @@
   --color-secondary: #333333;
   --color-card-bg: #e5e5e5;
   --color-card-hover: #bcbcbc;
-  --color-border: #cccccc;
+  /* --color-border: #cccccc; */
   --color-scrollbar-thumb: #bbbbbb;
   --color-scrollbar-track: #eeeeee;
   --color-toggle-bg: #bcbcbc;
@@ -71,7 +71,7 @@
   --color-secondary: #c1bcac; /*2*/
   --color-card-bg: #5c7457; /*4*/
   --color-card-hover: #979b8d; /*3*/
-  --color-border: #cccccc;
+  /* --color-border: #cccccc; */
   --color-scrollbar-thumb: #bbbbbb;
   --color-scrollbar-track: #eeeeee;
   --color-toggle-bg: #c1bcac; /*2*/
@@ -90,7 +90,7 @@
   --color-secondary: #da9f93; /*2*/
   --color-card-bg: #890620; /*4*/
   --color-card-hover: #b6465f; /*3*/
-  --color-border: #cccccc;
+  /* --color-border: #cccccc; */
   --color-scrollbar-thumb: #bbbbbb;
   --color-scrollbar-track: #eeeeee;
   --color-toggle-bg: #da9f93; /*2*/
@@ -109,7 +109,7 @@
   --color-secondary: #ff9ebb; /*2*/
   --color-card-bg: #8a2846; /*4*/
   --color-card-hover: #e05780; /*3*/
-  --color-border: #cccccc;
+  /* --color-border: #cccccc; */
   --color-scrollbar-thumb: #bbbbbb;
   --color-scrollbar-track: #eeeeee;
   --color-toggle-bg: #ff9ebb; /*2*/
