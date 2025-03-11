@@ -1,4 +1,4 @@
-# Playboiii - Movie & TV Streaming Website
+# Alien - Movie & TV Streaming Website
 
 [Alien](https://playboy-alien.onrender.com/)  is a simple, clean streaming website that allows users to search for and watch movies and TV shows through various external providers.
 
