@@ -449,7 +449,6 @@ function initRecentlyWatched() {
 }
 
 // Apply theme from settings - This is the key function
-// In script.js - update applyThemeFromSettings function
 function applyThemeFromSettings() {
   const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
 
