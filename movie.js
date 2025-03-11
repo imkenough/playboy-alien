@@ -54,7 +54,7 @@ async function fetchMovieDetails() {
     console.log("Fetched movie details:", data);
 
     // Update page title with movie name
-    document.title = `${data.title} - Movie Player`;
+    document.title = `${data.title}`;
 
     // Load saved server preference and update player
     const savedServer = loadUserPreference("server", "server1");

@@ -54,7 +54,7 @@ async function fetchTVDetails() {
     console.log("Fetched TV show details:", data);
 
     // Update page title with show name
-    document.title = `${data.name} - TV Show Player`;
+    document.title = `${data.name}`;
 
     renderSeasons(data.seasons);
 
