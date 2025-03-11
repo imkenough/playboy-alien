@@ -78,9 +78,9 @@
   --color-toggle-checked: #979b8d; /*3*/
   --color-skeleton: linear-gradient(
     90deg,
-    #d3d3d3 25%,
-    #c5c5c5 50%,
-    #d3d3d3 75%
+    #c1bcac 25%,
+    #979b8d 50%,
+    #c1bcac 75%
   );
 }
 
@@ -97,9 +97,9 @@
   --color-toggle-checked: #b6465f; /*3*/
   --color-skeleton: linear-gradient(
     90deg,
-    #d3d3d3 25%,
-    #c5c5c5 50%,
-    #d3d3d3 75%
+    #da9f93 25%,
+    #b6465f 50%,
+    #da9f93 75%
   );
 }
 
@@ -116,9 +116,9 @@
   --color-toggle-checked: #e05780; /*3*/
   --color-skeleton: linear-gradient(
     90deg,
-    #d3d3d3 25%,
-    #c5c5c5 50%,
-    #d3d3d3 75%
+    #ff9ebb 25%,
+    #e05780 50%,
+    #ff9ebb 75%
   );
 }
 
