@@ -74,8 +74,8 @@
   /* --color-border: #cccccc; */
   --color-scrollbar-thumb: #bbbbbb;
   --color-scrollbar-track: #eeeeee;
-  --color-toggle-bg: #c1bcac; /*2*/
-  --color-toggle-checked: #1e4830; /*5*/
+  --color-toggle-bg: #1e4830; /*2*/
+  --color-toggle-checked: #c1bcac; /*5*/
   --color-skeleton: linear-gradient(
     90deg,
     #d3d3d3 25%,
@@ -93,8 +93,8 @@
   /* --color-border: #cccccc; */
   --color-scrollbar-thumb: #bbbbbb;
   --color-scrollbar-track: #eeeeee;
-  --color-toggle-bg: #da9f93; /*2*/
-  --color-toggle-checked: #2c0703; /*5*/
+  --color-toggle-bg: #2c0703; /*2*/
+  --color-toggle-checked: #da9f93; /*5*/
   --color-skeleton: linear-gradient(
     90deg,
     #d3d3d3 25%,
@@ -112,8 +112,8 @@
   /* --color-border: #cccccc; */
   --color-scrollbar-thumb: #bbbbbb;
   --color-scrollbar-track: #eeeeee;
-  --color-toggle-bg: #ff9ebb; /*2*/
-  --color-toggle-checked: #522e38; /*5*/
+  --color-toggle-bg: #522e38; /*2*/
+  --color-toggle-checked: #ff9ebb; /*5*/
   --color-skeleton: linear-gradient(
     90deg,
     #d3d3d3 25%,
