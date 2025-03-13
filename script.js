@@ -584,9 +584,5 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-document.querySelectorAll("a").forEach((link) => {
-  link.href = link.href.replace(/\.html$/, "");
-});
-
 //toast message--------------------------------------------:
 showToast("Added color themes! Check out settings", 3000);
