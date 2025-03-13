@@ -110,7 +110,7 @@ function setupServerSwitchers() {
 function updatePlayer(server) {
   const playerIframe = document.getElementById("player-iframe");
   const servers = {
-    server1: `https://embed.su/embed/movie/${id}`, // Embed.su
+    server1: `https://vidsrc.icu/embed/movie/${id}`, // vidsrc.icu
     server2: `https://vidlink.pro/movie/${id}`, // vidlink
     server3: `https://vidsrc.to/embed/movie/${id}`, //vidsrc
   };
