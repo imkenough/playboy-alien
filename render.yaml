@@ -1,0 +1,8 @@
+static_sites:
+  - name: playboy-alien
+    build_command: "npm run build" # or your build command
+    public_dir: "build" # or your output directory
+    routes:
+      - type: rewrite
+        source: "/*"
+        destination: "/:splat.html"
