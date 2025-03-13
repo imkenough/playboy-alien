@@ -577,5 +577,16 @@ document.addEventListener("DOMContentLoaded", () => {
   displayRecentlyWatched();
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.location.pathname.endsWith(".html")) {
+    const newPath = window.location.pathname.replace(/\.html$/, "");
+    window.history.replaceState(null, "", newPath + window.location.search);
+  }
+});
+
+document.querySelectorAll("a").forEach((link) => {
+  link.href = link.href.replace(/\.html$/, "");
+});
+
 //toast message--------------------------------------------:
 showToast("Added color themes! Check out settings", 3000);
