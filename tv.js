@@ -252,7 +252,7 @@ function updatePlayer(server, episodeNumber = 1) {
   const seasonNumber = seasonSelect.value;
 
   const servers = {
-    server1: `https://vidsrc.dev/embed/tv/${id}/${seasonNumber}/${episodeNumber}`, // vidsrc.icu
+    server1: `https://vidbinge.dev/embed/tv/${id}/${seasonNumber}/${episodeNumber}`, // vidsrc.icu
     server2: `https://vidlink.pro/tv/${id}/${seasonNumber}/${episodeNumber}`, // vidlink
     server3: `https://vidsrc.to/embed/tv/${id}/${seasonNumber}/${episodeNumber}`, //vidsrc
   };
