@@ -330,16 +330,6 @@ function displayRecentlyWatched() {
         ? settings.recently_watched
         : true;
 
-    if (!showRecentlyWatched) {
-      const existingSection = document.querySelector(
-        ".recently-watched-section"
-      );
-      if (existingSection) {
-        existingSection.style.display = "none";
-      }
-      return;
-    }
-
     // Get or create section
     const section = createRecentlyWatchedSection();
     const grid = section.querySelector(".recently-watched-grid");
@@ -352,11 +342,8 @@ function displayRecentlyWatched() {
     grid.innerHTML = "";
 
     if (items.length === 0) {
-      // Show empty message
-      const emptyMsg = document.createElement("p");
-      emptyMsg.className = "recently-watched-empty";
-      emptyMsg.textContent = "No recently watched items yet";
-      grid.appendChild(emptyMsg);
+      // Hide the section if there are no items
+      section.style.display = "none";
 
       // Add "no-recently-watched" class to search wrapper
       const searchWrapper = document.getElementById("search-wrapper");
@@ -370,15 +357,15 @@ function displayRecentlyWatched() {
         grid.appendChild(card);
       });
 
+      // Show the section
+      section.style.display = "block";
+
       // Remove "no-recently-watched" class from search wrapper
       const searchWrapper = document.getElementById("search-wrapper");
       if (searchWrapper) {
         searchWrapper.classList.remove("no-recently-watched");
       }
     }
-
-    // Show the section
-    section.style.display = "block";
   } catch (error) {
     console.error("Error displaying recently watched:", error);
   }
