@@ -105,9 +105,7 @@ function setupEventListeners() {
 
 // Function to update recently watched visibility
 function updateRecentlyWatchedVisibility(show) {
-  // For the settings page, we don't need to do anything
-  // For the home page, this is handled in the script.js file
-  // But we can broadcast an event for other pages to listen to
+  // Dispatch an event to notify other pages of the change
   const event = new CustomEvent("recentlyWatchedSettingChanged", {
     detail: { show: show },
   });

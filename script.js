@@ -311,6 +311,17 @@ function createRecentlyWatchedSection() {
   return section;
 }
 
+// Listen for changes to the recently watched setting
+document.addEventListener("recentlyWatchedSettingChanged", (event) => {
+  const show = event.detail.show;
+  const recentlyWatchedSection = document.querySelector(
+    ".recently-watched-section"
+  );
+  if (recentlyWatchedSection) {
+    recentlyWatchedSection.style.display = show ? "block" : "none";
+  }
+});
+
 function isHomePage() {
   return (
     window.location.pathname.endsWith("index.html") ||
@@ -341,8 +352,8 @@ function displayRecentlyWatched() {
     // Clear grid
     grid.innerHTML = "";
 
-    if (items.length === 0) {
-      // Hide the section if there are no items
+    if (!showRecentlyWatched || items.length === 0) {
+      // Hide the section if the setting is off or there are no items
       section.style.display = "none";
 
       // Add "no-recently-watched" class to search wrapper
