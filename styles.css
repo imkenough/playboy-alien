@@ -1077,6 +1077,32 @@ body {
   font-weight: 300;
 }
 
+.recently-watched-card-header {
+  position: relative;
+}
+
+.recently-watched-delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.recently-watched-delete-btn:hover {
+  background-color: rgba(255, 0, 0, 0.7); /* Red background on hover */
+}
+
 /* For when recently watched section exists and has content */
 .rt-search-container-wrapper:not(.no-recently-watched) {
   top: 150px;

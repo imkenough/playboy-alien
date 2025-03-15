@@ -403,16 +403,30 @@ function createRecentlyWatchedCard(item) {
 
   // Build HTML
   card.innerHTML = `
-    <img class="recently-watched-card-img" src="${posterUrl}" alt="${item.title}">
+    <div class="recently-watched-card-header">
+      <img class="recently-watched-card-img" src="${posterUrl}" alt="${item.title}">
+      <button class="recently-watched-delete-btn">&times;</button>
+    </div>
     <div class="recently-watched-card-info">
       <h3 class="recently-watched-card-title">${item.title}</h3>
       <p class="recently-watched-card-meta">${mediaType} • ${year}</p>
     </div>
   `;
 
-  // Add click handler
-  card.addEventListener("click", () => {
-    window.location.href = `${item.media_type}.html?id=${item.id}`;
+  // Add click handler for the card (to navigate to the movie/show page)
+  card.addEventListener("click", (event) => {
+    // Prevent navigation if the delete button is clicked
+    if (!event.target.classList.contains("recently-watched-delete-btn")) {
+      window.location.href = `${item.media_type}.html?id=${item.id}`;
+    }
+  });
+
+  // Add click handler for the delete button
+  const deleteButton = card.querySelector(".recently-watched-delete-btn");
+  deleteButton.addEventListener("click", (event) => {
+    event.stopPropagation(); // Prevent the card click event from firing
+    removeFromRecentlyWatched(item); // Remove the item from localStorage
+    card.remove(); // Remove the card from the UI
   });
 
   return card;
@@ -447,6 +461,11 @@ function initRecentlyWatched() {
   // Display the section
   displayRecentlyWatched();
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  initRecentlyWatched(); // Ensure this is called
+  displayRecentlyWatched(); // Ensure this is called
+});
 
 // Apply theme from settings - This is the key function
 function applyThemeFromSettings() {
