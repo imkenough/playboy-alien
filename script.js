@@ -473,8 +473,6 @@ function applyThemeFromSettings() {
   if (THEMES[theme]) {
     document.body.classList.add(THEMES[theme]);
   }
-
-  console.log(`Applied theme from settings: ${theme}, class: ${THEMES[theme]}`); // Debugging
 }
 
 // Add this event listener at the end of script.js
@@ -530,6 +528,24 @@ document.addEventListener("recentlyWatchedSettingChanged", (event) => {
 
 // Toast Message Component
 function showToast(message, duration = 3000) {
+  // Check if the toast has expired (1 week in milliseconds)
+  const oneWeekInMs = 7 * 24 * 60 * 60 * 1000; // 7 days
+  const toastShownCount = localStorage.getItem("toastShownCount");
+  const toastDismissed = localStorage.getItem("toastDismissed");
+  const toastTimestamp = localStorage.getItem("toastTimestamp");
+
+  // If the timestamp exists and is older than a week, clear the data
+  if (toastTimestamp && Date.now() - parseInt(toastTimestamp) > oneWeekInMs) {
+    localStorage.removeItem("toastShownCount");
+    localStorage.removeItem("toastDismissed");
+    localStorage.removeItem("toastTimestamp");
+  }
+
+  // Check if the user has seen the toast more than twice or dismissed it
+  if (toastShownCount >= 2 || toastDismissed === "true") {
+    return; // Don't show the toast if the user has seen it twice or dismissed it
+  }
+
   // Create toast container if it doesn't exist
   let toastContainer = document.querySelector(".toast-container");
   if (!toastContainer) {
@@ -548,6 +564,9 @@ function showToast(message, duration = 3000) {
   closeButton.className = "toast-close";
   closeButton.innerHTML = "&times;";
   closeButton.addEventListener("click", () => {
+    // Set the dismissed flag and timestamp in localStorage
+    localStorage.setItem("toastDismissed", "true");
+    localStorage.setItem("toastTimestamp", Date.now());
     toast.remove();
   });
 
@@ -563,6 +582,10 @@ function showToast(message, duration = 3000) {
   // Show the toast
   toast.classList.add("show");
 
+  // Increment the toast shown count and store the timestamp in localStorage
+  localStorage.setItem("toastShownCount", (parseInt(toastShownCount) || 0) + 1);
+  localStorage.setItem("toastTimestamp", Date.now());
+
   // Automatically remove the toast after the specified duration
   if (duration > 0) {
     setTimeout(() => {
@@ -572,10 +595,7 @@ function showToast(message, duration = 3000) {
   }
 }
 
+//toast message---------------------------------------------------------:
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOMContentLoaded event fired"); // Debugging
-  displayRecentlyWatched();
+  showToast("Added color themes! Check out settings", 3000);
 });
-
-//toast message--------------------------------------------:
-showToast("Added color themes! Check out settings", 3000);
