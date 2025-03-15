@@ -467,6 +467,35 @@ document.addEventListener("DOMContentLoaded", () => {
   displayRecentlyWatched(); // Ensure this is called
 });
 
+// Function to remove an item from recently watched
+function removeFromRecentlyWatched(item) {
+  try {
+    // Get existing items from local storage
+    let recentItems =
+      JSON.parse(localStorage.getItem(RECENTLY_WATCHED_ITEMS)) || [];
+
+    // Find the index of the item to remove
+    const index = recentItems.findIndex(
+      (i) => i.id === item.id && i.media_type === item.media_type
+    );
+
+    // If the item exists, remove it
+    if (index !== -1) {
+      recentItems.splice(index, 1);
+    }
+
+    // Save the updated list back to local storage
+    localStorage.setItem(RECENTLY_WATCHED_ITEMS, JSON.stringify(recentItems));
+
+    // If on the homepage, refresh the recently watched section
+    if (isHomePage()) {
+      displayRecentlyWatched();
+    }
+  } catch (error) {
+    console.error("Error removing from recently watched:", error);
+  }
+}
+
 // Apply theme from settings - This is the key function
 function applyThemeFromSettings() {
   const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
