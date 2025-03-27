@@ -110,8 +110,8 @@ function setupServerSwitchers() {
 function updatePlayer(server) {
   const playerIframe = document.getElementById("player-iframe");
   const servers = {
-    server1: `https://vidbinge.dev/embed/movie/${id}`, // vidsrc.icu
-    server2: `https://vidlink.pro/movie/${id}`, // vidlink
+    server1: `https://vidlink.pro/embed/movie/${id}`, // vidsrc.icu
+    server2: `https://embed.su/movie/${id}`, // vidlink
     server3: `https://vidsrc.to/embed/movie/${id}`, //vidsrc
   };
 
