@@ -442,19 +442,19 @@ function initRecentlyWatched() {
   if (!showRecentlyWatched) return;
 
   // For development: add sample data if empty
-  if (!localStorage.getItem(RECENTLY_WATCHED_ITEMS)) {
-    const sampleData = [
-      {
-        id: 123,
-        title: "Sample Movie",
-        poster_path: null,
-        media_type: "movie",
-        release_date: "2023-01-15",
-        timestamp: new Date().toISOString(),
-      },
-    ];
-    localStorage.setItem(RECENTLY_WATCHED_ITEMS, JSON.stringify(sampleData));
-  }
+  // if (!localStorage.getItem(RECENTLY_WATCHED_ITEMS)) {
+  //   const sampleData = [
+  //     {
+  //       id: 123,
+  //       title: "Sample Movie",
+  //       poster_path: null,
+  //       media_type: "movie",
+  //       release_date: "2023-01-15",
+  //       timestamp: new Date().toISOString(),
+  //     },
+  //   ];
+  //   localStorage.setItem(RECENTLY_WATCHED_ITEMS, JSON.stringify(sampleData));
+  // }
 
   // Display the section
   displayRecentlyWatched();
